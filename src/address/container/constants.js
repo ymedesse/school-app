@@ -1,0 +1,2 @@
+export const SET_ADDRESSES="SET_ADDRESSES"
+export const SET_IN_ADRESSES="SET_IN_ADRESSES"

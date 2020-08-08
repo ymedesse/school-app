@@ -1,0 +1,14 @@
+export const ORDER_MENU = "order_menu";
+export const CREATE_ACTION = "add_order";
+export const UPDATE_ACTION = "update_order";
+export const ACTION_VIEW_STATUS = "view_status_order";
+export const ACTION_VIEW_LOCAL_STATUS = "view_local_status_order";
+export const ACTION_UPDATE_STATUS = "update_status_order";
+export const ACTION_FILTER_BY_LOCAL_STATUS = "filter_by_local_status_order";
+export const ACTION_FILTER_BY_STATUS = "filter_by_status_order";
+export const ACTION_UPDATE_LOCAL_STATUS = "view_local_status_order";
+export const ACTION_VIEW_ORDER_AMOUNT = "view_order_amont";
+export const ACTION_VIEW_PORDUCT_ORDERED = "view_product_odered";
+export const ACTION_SUBMIT_PAYMENTS = "submit_payments";
+export const ACTION_VIEW_PAYMENTS_RESUME = "view_payments_resume";
+export const ACTION_VIEW_PAYMENTS_LIST = "view_payments_list";

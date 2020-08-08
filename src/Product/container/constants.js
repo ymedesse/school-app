@@ -1,0 +1,12 @@
+export const SIGNIN="SIGNIN"
+export const SIGNUP="SIGNUP"
+export const SIGNOUT="SIGNOUT"
+export const AUTHENTICATE="AUTHENTICATE"
+export const SET_OPEN_SIGNIN="SET_OPEN_SIGNIN"
+export const SET_OPEN_SIGNUP="SET_OPEN_SIGNUP"
+export const SET_ADMIN_MODE="SET_ADMIN_MODE"
+export const SET_CURRENT_SESSION="SET_CURRENT_SESSION"
+
+
+
+
