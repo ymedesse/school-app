@@ -114,7 +114,7 @@ const Home = () => {
               variant="text"
               color="primary"
             >
-              Ajouter mon école
+              Ajouter votre école
             </Button>
           </div>
         </div>

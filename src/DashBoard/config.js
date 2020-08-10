@@ -35,12 +35,12 @@ const menuConfig = [
     content: Orders,
     isRootLink: false,
   },
-  {
-    path: routeLink.ADRESSES_LINK,
-    title: "Adresses",
-    content: Adresses,
-    isRootLink: true,
-  },
+  // {
+  //   path: routeLink.ADRESSES_LINK,
+  //   title: "Adresses",
+  //   content: Adresses,
+  //   isRootLink: true,
+  // },
   {
     path: routeLink.COMPTE_LINK,
     title: "Détails du compte",

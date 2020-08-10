@@ -3,20 +3,18 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { Link as RouterLink } from "react-router-dom";
-import { PRODUCT_LINK } from "../../routerLinks";
+// import { PRODUCT_LINK } from "../../routerLinks";
 
 /**
  *
  * @param {int} discount
  */
 const Title = ({ item, quantity }) => {
+  // const link = PRODUCT_LINK + "/" + product.slug;
+  const link = "#";
   return (
     <>
-      <Link
-        component={RouterLink}
-        variant="subtitle2"
-        to={PRODUCT_LINK + "/" + item.slug}
-      >
+      <Link component={RouterLink} variant="subtitle2" to={link}>
         {quantity}
         {" x "}
         {item.name}

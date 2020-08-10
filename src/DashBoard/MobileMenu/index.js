@@ -1,13 +1,13 @@
 import React from "react";
 import MenuIcon from "@material-ui/icons/Menu";
-import ToolTipMenu from "../../components/ToolTipMenuCtrl";
 import MenuList from "./MenuList";
 import { ButtonWithIcon } from "../../components/Buttons";
+import MenuPopOver from "../../components/MenuPopOver";
 
 const UserMenu = () => {
   return (
-    <ToolTipMenu
-      actionner={(handleClick) => (
+    <MenuPopOver
+      actionner={({ handleClick }) => (
         <ButtonWithIcon
           variant="contained"
           // color="primary"
@@ -18,7 +18,6 @@ const UserMenu = () => {
         </ButtonWithIcon>
       )}
       content={({ handleClose }) => <MenuList handleClose={handleClose} />}
-      skeletonCount
     />
   );
 };

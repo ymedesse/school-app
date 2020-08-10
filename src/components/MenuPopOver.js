@@ -7,7 +7,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-export default function MenuPopover({ menus, actionner }) {
+export default function MenuPopover({ menus, content, actionner }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
@@ -21,7 +21,7 @@ export default function MenuPopover({ menus, actionner }) {
     setOpen(false);
   };
 
-  const content = (
+  const getDefaultContent = () => (
     <List dense={true}>
       {menus.map((item, index) =>
         item.divider ? (
@@ -43,6 +43,9 @@ export default function MenuPopover({ menus, actionner }) {
     </List>
   );
 
+  const getContent = () =>
+    content ? content({ handleClose }) : menus ? getDefaultContent : "";
+
   return (
     <>
       <Popover
@@ -50,15 +53,15 @@ export default function MenuPopover({ menus, actionner }) {
         open={open}
         anchorEl={anchorEl}
         anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: "bottom",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: "top",
+          horizontal: "left",
         }}
       >
-        {content}
+        {getContent()}
       </Popover>
       {actionner({ handleClick })}
     </>

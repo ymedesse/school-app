@@ -5,9 +5,11 @@ import { TitleTypography } from "../../components/Typography";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import EmptyImage from "../../assets/empty.svg";
+import { makeStyles } from "@material-ui/core/styles";
 
-const EmptyCart = ({ isCommande= false}) => {
+const EmptyCart = ({ isCommande = false }) => {
   const tabTitle = isCommande ? "liste de commande" : "panier";
+  const classes = useStyles();
   return (
     <>
       <TitleTypography gutterBottom>
@@ -20,14 +22,7 @@ const EmptyCart = ({ isCommande= false}) => {
         justify="center"
         alignItems="center"
       >
-        <img
-          style={{
-            height: "250px",
-            margin: "auto",
-          }}
-          src={EmptyImage}
-          alt="kk"
-        />
+        <img className={classes.image} src={EmptyImage} alt="kk" />
 
         <Link
           component={RouterLink}
@@ -44,3 +39,14 @@ const EmptyCart = ({ isCommande= false}) => {
 };
 
 export default EmptyCart;
+
+const useStyles = makeStyles((theme) => ({
+  image: {
+    width: "350px",
+    margin: "auto",
+    [theme.breakpoints.down("sm")]: {
+      width: "250px",
+    },
+  },
+  suspense: {},
+}));

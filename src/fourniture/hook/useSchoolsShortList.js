@@ -19,7 +19,7 @@ const useSchoolsShortList = () => {
       if (i === max - 1) break;
     }
     select.push({
-      name: "...Afficher toutes les écoles",
+      name: "Afficher toutes les écoles ...",
       link: SCHOOL_LIST_LINK,
     });
     return select;

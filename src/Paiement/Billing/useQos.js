@@ -7,7 +7,7 @@ const useQosPayment = ({ setSubmiting }) => {
   const { processQosPayment, checkQosPaymentStatus } = rootContext.checkout;
   const { performErrorAlert } = rootContext.alert;
 
-  const defaultErrorAlert = (errorMessage, error) => {
+  const defaultErrorAlert = (errorMessage) => {
     setSubmiting && setSubmiting(false);
     performErrorAlert(errorMessage);
   };
@@ -41,7 +41,7 @@ const useQosPayment = ({ setSubmiting }) => {
             "Veuillez vérifier votre connexion internet puis réessayer",
             error
           );
-        else return defaultErrorAlert("Une erreur s'est produite", error);
+        else return defaultErrorAlert(error);
       }
 
       if (responsecode === "01") {

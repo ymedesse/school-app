@@ -6,7 +6,7 @@ const UserMenu = () => {
   const list = [
     {
       name: "Tableau de bord",
-      link: routeLink.COMPTE_LINK,
+      link: routeLink.DASHBOARD_LINK,
     },
     {
       name: "Détails du compte",

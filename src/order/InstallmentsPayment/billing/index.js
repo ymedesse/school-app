@@ -94,7 +94,10 @@ const InstallmentPayement = ({ match, history, location }) => {
         // onClick={() => setSubmiting(false)}
       >
         <CircularProgress color="inherit" />
-        <div> Si vous ne recevez pas une demande de validation sur votre téléphone, veuillez vérifier les validation en attente </div>
+        <div style={{ fontSize: "1rem" }}>
+          Si vous ne recevez pas une demande de validation automatiquement,
+          veuillez vérifier les validations en attente,
+        </div>
       </Backdrop>
     </>
   );

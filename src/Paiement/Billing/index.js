@@ -45,7 +45,9 @@ const Checkout = ({ location, history }) => {
     const { payment: paymentInfo } = values;
     const file = isCommande ? COMMANDE : CART;
     const isMomo = paymentInfo.method === "momo";
-    const paymentData = isMomo ? await submitQosPayment(paymentInfo) : {};
+    const paymentData = isMomo
+      ? await submitQosPayment(paymentInfo, () => setSubmiting(false))
+      : {};
 
     if (paymentData) {
       const { date_paid, serviceref } = { ...paymentData };
@@ -102,6 +104,10 @@ const Checkout = ({ location, history }) => {
       {showCheckout()}
       <Backdrop className={classes.backdrop} open={submiting}>
         <CircularProgress color="inherit" />
+        <div style={{ fontSize: "1.2rem" }}>
+          Si vous ne recevez pas une demande de validation automatiquement,
+          veuillez vérifier les validations en attente,
+        </div>
       </Backdrop>
     </>
   );

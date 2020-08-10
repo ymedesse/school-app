@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as LinkRouter } from "react-router-dom";
-import { PRODUCT_LINK } from "../../routerLinks";
+// import { PRODUCT_LINK } from "../../routerLinks";
 
 const ProductThumbnail = ({
   product,
@@ -10,8 +10,11 @@ const ProductThumbnail = ({
   ...restProps
 }) => {
   const classes = useStyles({ mobileImageWidth });
+  // const link = PRODUCT_LINK + "/" + product.slug;
+  const link = "#";
+
   return (
-    <LinkRouter className={classes.link} to={PRODUCT_LINK + "/" + product.slug}>
+    <LinkRouter className={classes.link} to={link}>
       <img
         className={classes.image}
         // src={`${API}/photo/${product.assets.featuredImage}`}

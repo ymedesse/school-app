@@ -23,7 +23,7 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
       <div className={classes.textContainer}>
         <div className={classes.margin} />
         <LabelText className={classes.title}>
-          Si vous ne trouvez pas votre école, ajoutez le et nous nous occupons
+          Si vous ne trouvez pas votre école, ajoutez la et nous nous occupons
           de tous.
         </LabelText>
 
