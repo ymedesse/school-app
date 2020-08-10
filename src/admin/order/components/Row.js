@@ -4,17 +4,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import purple from "@material-ui/core/colors/purple";
 import ListItemText from "@material-ui/core/ListItemText";
-import Typography from "@material-ui/core/Typography";
 import Checkbox from "@material-ui/core/Checkbox";
 import Fade from "@material-ui/core/Fade";
 import Box from "@material-ui/core/Box";
 import { dateToText } from "../../../utils";
 import { getStatusColor } from "../container/utils";
 
-import { TitleTypography } from "../../../components/Typography";
 import {
   ValueText,
-  LabelText,
   MiniValueText,
   MiniLabelText,
 } from "../../../components/LabelValueTypography";

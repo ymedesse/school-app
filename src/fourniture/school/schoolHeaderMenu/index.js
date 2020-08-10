@@ -23,7 +23,7 @@ const UserMenu = ({ user, signout, adminRole }) => {
           Listes des Ecoles
         </Button>
       )}
-      content={({ handleClose }) => <SchoolList handleClose={handleClose} />}
+      content={({ handleClose }) => <SchoolList  handleClose={handleClose} />}
       skeletonCount
     />
   );

@@ -50,7 +50,11 @@ const Home = () => {
   );
 
   const content = (
-    <Grid container direction={isMobile ? "column-reverse" : "row"}>
+    <Grid
+      className={classes.root}
+      container
+      direction={isMobile ? "column-reverse" : "row"}
+    >
       <Grid item sm={6} xs={12}>
         <div className={classes.main}>
           {!isMobile && title}
@@ -60,11 +64,6 @@ const Home = () => {
               <React.Suspense fallback={<CircularProgress />}>
                 <SchoolSelector
                   fullWidth={true}
-                  textFieldProps={{
-                    style: {
-                      backgroundColor: "#fff",
-                    },
-                  }}
                   placeholder="Chercher par le nom de école ..."
                   handleChange={handleSchoolChange}
                 />
@@ -132,12 +131,15 @@ const Home = () => {
     </Grid>
   );
 
-  return <>{content} </>;
+  return <div>{content} </div>;
 };
 
 export default Home;
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    alignItems: "center",
+  },
   paper: {
     padding: theme.spacing(4, 4),
   },

@@ -10,7 +10,6 @@ import useSWR, { trigger } from "swr";
 import AddIcon from "@material-ui/icons/Add";
 import ListSkeleton from "../../../components/ListSkeleton";
 import { CREATE_ACTION, UPDATE_ACTION } from "../containers/accesses";
-import { ListItemAvatar } from "@material-ui/core";
 const BodyDialog = React.lazy(() => import("./content/BodyDialog"));
 const SchoolClasses = React.lazy(() => import("./Body"));
 

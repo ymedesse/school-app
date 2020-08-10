@@ -103,7 +103,20 @@ const authPerformances = (dispatch, auth) => {
     });
   };
 
-  const setCartQuantities = (items, next = () => {}, file) => {
+  const setCartQuantities = async (items, file, next = () => {}) => {
+    return setCartQuantitiesSec(items, file, (data) => {
+      setDispatchAction(file, data);
+      next && next(data);
+    });
+  };
+
+  const setCartQuantitiesOnly = async (items, file, next) => {
+    return setCartQuantitiesSec(items, file, (data) => {
+      next && next(data);
+    });
+  };
+
+  const setCartQuantitiesSec = async (items, file, next = () => {}) => {
     const { user, token } = auth;
 
     const func = getFunc(
@@ -117,8 +130,7 @@ const authPerformances = (dispatch, auth) => {
         if (data.error) {
           console.log(data.error);
         } else {
-          setDispatchAction(file, data);
-          next && next();
+          next && next(data);
         }
       } else console.log("something is wrong", { data });
     });
@@ -136,7 +148,6 @@ const authPerformances = (dispatch, auth) => {
   };
 
   const setCartFromUserInfo = async (data, oldCart, oldCmd) => {
-    console.log("kkk");
     if (data && !data.error) {
       let { cart, commande } = data;
       setCartCmde(cart, oldCart, cartInit, (val) =>
@@ -164,6 +175,7 @@ const authPerformances = (dispatch, auth) => {
     addToCart,
     removeFromCart,
     setCartQuantities,
+    setCartQuantitiesOnly,
     completeCart,
     setCart,
     setCommande,

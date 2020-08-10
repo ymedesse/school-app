@@ -129,7 +129,7 @@ const Row = ({
         >
           CFA {priceToText()}
         </Typography>
-        {tva && ` TVA : ${tvaValue}`}
+        {tvaValue && tvaValue > 0 && ` TVA : ${tvaValue}`}
         <Typography
           component="span"
           variant="body2"

@@ -53,7 +53,8 @@ const Form = ({ classes = {}, form, ...props }) => {
         </SuspensePaper> */}
         <SuspensePaper>
           <ProductImages classes={classes} ligthForm={true} />
-        </SuspensePaper>{" "}
+            
+        </SuspensePaper>
       </Grid>
 
       <Grid container item xs={12} sm={5}>

@@ -13,19 +13,18 @@ export default ({ setCurrentViewTitle, ...props }) => {
   const classes = useStyles();
   const { isAuthenticatedUser } = useContext(context).auth;
 
-  !isAuthenticatedUser && history.push("/");
-  return (
-    isAuthenticatedUser && (
-      <Paper className={classes.paper}>
-        <Typography variant="subtitle1">
-          Désolé ! Vous ne pouvez pas accéder à la page demandée.
-          <br />
-          <Link onClick={signout} variant="subtitle1" component="button">
-            <strong>Déconnexion</strong>
-          </Link>
-        </Typography>
-      </Paper>
-    )
+  return isAuthenticatedUser ? (
+    <Paper className={classes.paper}>
+      <Typography variant="subtitle1">
+        Désolé ! Vous ne pouvez pas accéder à la page demandée.
+        <br />
+        <Link onClick={signout} variant="subtitle1" component="button">
+          <strong>Déconnexion</strong>
+        </Link>
+      </Typography>
+    </Paper>
+  ) : (
+    history.push("/")
   );
 };
 

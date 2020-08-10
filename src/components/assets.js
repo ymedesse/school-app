@@ -13,15 +13,10 @@ import ClearAllIcon from "@material-ui/icons/ClearAll";
 
 import InsertPhotoIcon from "@material-ui/icons/InsertPhoto";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import { TextField } from "mui-rff";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import IconButton from "@material-ui/core/IconButton";
-import LockIcon from "@material-ui/icons/Lock";
 import ClearIcon from "@material-ui/icons/Clear";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import MuiButton from "@material-ui/core/Button";
 import ReplayIcon from "@material-ui/icons/Replay";
 import DeleteIcon from "@material-ui/icons/Delete";

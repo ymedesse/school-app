@@ -27,15 +27,10 @@ const Facturation = ({
     setExpanded(initialExpanded);
   }, [initialExpanded]);
 
-  const { price, tva, sale_price = 0, discount, total } =
-    cart.totalDetail || {};
-
-  const getRemise = () => {
-    return isCommande ? 0 : price - sale_price;
-  };
+  const { price, sale_price = 0, discount, total } = cart.totalDetail || {};
 
   const getTotal = () => {
-    return parseInt(total) || 0 + (shippingPrice || 0);
+    return (parseInt(total) || 0) + (shippingPrice || 0);
   };
 
   const title = isCommande
@@ -70,17 +65,20 @@ const Facturation = ({
         <div className={classes.subTotalRow}>
           <Typography variant="body2"> Total remise </Typography>
           <Typography className={classes.montant} variant="subtitle2">
-            {getRemise()} Fcfa
+            {discount} Fcfa
           </Typography>
         </div>
       )}
 
-      <div className={classes.subTotalRow}>
-        <Typography variant="body2"> Montant TVA </Typography>
-        <Typography className={classes.montant} variant="subtitle2">
-          {tva} Fcfa
-        </Typography>
-      </div>
+      <Divider light />
+      {discount !== 0 && (
+        <div className={classes.subTotalRow}>
+          <Typography variant="body2"> Montant total </Typography>
+          <Typography className={classes.montant} variant="subtitle2">
+            {sale_price} Fcfa
+          </Typography>
+        </div>
+      )}
 
       <div className={classes.subTotalRow}>
         <Typography variant="body2"> Livraison </Typography>

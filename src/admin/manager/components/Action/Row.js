@@ -1,6 +1,5 @@
 import React from "react";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -24,7 +23,7 @@ const Row = ({
   submitUpdate,
   handleDelete,
 }) => {
-  const classes = useStyles();
+  
 
   const editableButton = (
     <React.Suspense
@@ -116,13 +115,4 @@ const isEqual = (prev, next) => {
 
 export default React.memo(Row, isEqual);
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    maxWidth: "36ch",
-    backgroundColor: theme.palette.background.paper,
-  },
-  inline: {
-    display: "inline",
-  },
-}));
+

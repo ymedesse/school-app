@@ -7,6 +7,9 @@ import SchoolIcon from "@material-ui/icons/School";
 import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
 import BusinessIcon from "@material-ui/icons/Business";
 import ImageIcon from "@material-ui/icons/Image";
+import { FormSpy } from "react-final-form";
+
+import SimpleSelctor from "../../../../components/SimpleSelectorMUI";
 
 const Form = ({ ...props }) => {
   return (
@@ -58,7 +61,7 @@ const Form = ({ ...props }) => {
         />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} sm={6}>
         <SimpleTextField
           label="Logo"
           placeholder="Logo de l'école"
@@ -71,6 +74,20 @@ const Form = ({ ...props }) => {
             ),
           }}
         />
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <FormSpy subscription={{ values: true }}>
+          {({ values }) => (
+            <SimpleSelctor
+              labelId={values.status}
+              name="status"
+              values={["draft", "publish"]}
+              label="Status"
+              helper="status"
+            />
+          )}
+        </FormSpy>
       </Grid>
 
       <Grid item xs={12}>

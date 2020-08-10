@@ -1,7 +1,6 @@
 import React from "react";
 import MultipleSelector from "../../../../components/MultipleSelector";
 import useSWR from "swr";
-import { LIST_URL } from "../../containers/constants";
 import context from "../../../context/AdminContext";
 
 const CategorieSelector = ({
@@ -15,14 +14,20 @@ const CategorieSelector = ({
   value,
 }) => {
   const adminContext = React.useContext(context);
-  const { schools } = adminContext.school;
+  const { schools, getPartialSearch } = adminContext.school;
+  const [values, setValues] = React.useState([...(schools || [])]);
 
-  const { data, error } = useSWR(LIST_URL, {
+  const url = getPartialSearch({ status: "publish" });
+
+  const { data, error } = useSWR(url, {
     refreshInterval: 0,
     revalidateOnFocus: true,
-    initialData: schools,
     suspense: true,
   });
+
+  React.useEffect(() => {
+    if (data && !data.error) setValues((values) => [...data.results]);
+  }, [data]);
 
   if (error) {
     console.log({ error });
@@ -38,7 +43,7 @@ const CategorieSelector = ({
           handleChange={handleChange}
           labelText={labelText}
           placeholder={placeholder}
-          values={data}
+          values={values}
           multiple={false}
           // defaultOption={true}
           textFieldProps={textFieldProps}

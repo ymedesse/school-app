@@ -5,24 +5,31 @@ import context from "../rootContext/context";
 
 const Alert = () => {
   const rootContext = useContext(context);
-  const { success, error, next: rootNext, initialize } = rootContext.alert;
-  const m = rootContext.auth;
+  const {
+    success,
+    error,
+    next: rootNext,
+    initialize,
+    message,
+    title,
+    action,
+  } = rootContext.alert;
   const next = () => {
     rootNext && rootNext();
     initialize();
   };
 
+  const notificationType = success ? "success" : error ? "error" : undefined;
+  const myMessage = notificationType ? message : undefined;
+
   return (
     <>
       <Notifier
-        notificationType="success"
-        message={typeof success !== "object" ? success : "succès"}
+        notificationType={notificationType}
+        message={myMessage}
         nextClose={next}
-      />
-      <Notifier
-        notificationType="error"
-        message={typeof error !== "object" ? error : "error"}
-        nextClose={next}
+        title={title}
+        action={action}
       />
     </>
   );

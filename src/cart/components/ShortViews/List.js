@@ -38,7 +38,7 @@ const ItemList = ({ values, removeItem, file }) => {
           <div key={product._id}>
             <ListItem alignItems="flex-start" dense>
               <ListItemAvatar className={classes.image}>
-                <ProductThumbnail product={product} imageFile={first} />
+                <ProductThumbnail mobileImageWidth="50px" product={product} imageFile={first} />
               </ListItemAvatar>
 
               <ListItemText

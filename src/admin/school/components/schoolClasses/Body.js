@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import ListSkeleton from "../../../../components/ListSkeleton";
 import { SimpleTextField } from "../../../../components/TextFieldMUI";
 import useSWR from "swr";
-import validate from "./validations";
 
 // import { CREATE_ACTION, UPDATE_ACTION } from "../../container/accesses";
 

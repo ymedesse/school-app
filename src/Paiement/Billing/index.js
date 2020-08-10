@@ -35,7 +35,7 @@ const Checkout = ({ location, history }) => {
     getFetcher,
   } = rootContext.cart;
 
-  const {  performErrorAlert } = rootContext.alert;
+  const { performErrorAlert } = rootContext.alert;
   const { submitOder } = rootContext.checkout;
 
   const classes = useStyles();
@@ -100,11 +100,7 @@ const Checkout = ({ location, history }) => {
       <SubHeader routes={getRoutes(pathName)} title="Paiement" />
 
       {showCheckout()}
-      <Backdrop
-        className={classes.backdrop}
-        open={submiting}
-        onClick={() => setSubmiting(false)}
-      >
+      <Backdrop className={classes.backdrop} open={submiting}>
         <CircularProgress color="inherit" />
       </Backdrop>
     </>

@@ -11,12 +11,11 @@ import {
   CancelIconButton,
 } from "../../../../components/Buttons";
 import Fade from "@material-ui/core/Fade";
-import Chip from "@material-ui/core/Chip";
 
 const Row = ({
   handleToggle,
   handleUpdate,
-  checked,
+    checked,
   checkable,
   value,
   isCurrent,

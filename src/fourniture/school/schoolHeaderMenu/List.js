@@ -4,7 +4,7 @@ import MenuList from "@material-ui/core/MenuList";
 import { withStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 
-import { SCHOOL_LIST_LINK } from "../../../routerLinks";
+// import { SCHOOL_LIST_LINK } from "../../../routerLinks";
 import useSchoolsShortList from "../../hook/useSchoolsShortList";
 
 const SchoolListHeaderMenu = ({ handleClose }) => {
@@ -16,9 +16,9 @@ const SchoolListHeaderMenu = ({ handleClose }) => {
       // autoFocusItem={open}
       // keepMounted
     >
-      {schools.map((item) => (
+      {schools.map((item, index) => (
         <StyledMenuItem
-          key={item.slug}
+          key={index}
           dense={true}
           onClick={() => handleClose()}
           component={RouterLink}
@@ -28,14 +28,14 @@ const SchoolListHeaderMenu = ({ handleClose }) => {
         </StyledMenuItem>
       ))}
 
-      <StyledMenuItem
+      {/* <StyledMenuItem
         dense={true}
         onClick={() => handleClose()}
         component={RouterLink}
         to={SCHOOL_LIST_LINK}
       >
         Plus d'écoles ...
-      </StyledMenuItem>
+      </StyledMenuItem> */}
     </MenuList>
   );
 };

@@ -2,7 +2,6 @@ import React from "react";
 import { LargeTypography } from "./Typography";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 
 const ErrorMessage = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
   const classes = useStyles();

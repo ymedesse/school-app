@@ -75,6 +75,7 @@ const defaultValue = {
   address: "",
   phone: "",
   image: "",
+  status:"publish"
 };
 
 const isEqual = (prev, next) => {

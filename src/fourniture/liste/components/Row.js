@@ -66,7 +66,7 @@ const Product = ({
         color="primary"
         size={isMobile ? "small" : "medium"}
         startIcon={<ShoppingCartIcon />}
-        onClick={() => addItemToCart(product._id, quantity)}
+        onClick={() => addItemToCart(product, quantity)}
       >
         Ajouter
       </ButtonWithIcon>
@@ -76,7 +76,7 @@ const Product = ({
         color="primary"
         size={isMobile ? "small" : "medium"}
         startIcon={<LocalMallIcon />}
-        onClick={() => addItemToCommande(product._id, quantity)}
+        onClick={() => addItemToCommande(product, quantity)}
       >
         Commander
       </ButtonWithIcon>
@@ -196,8 +196,6 @@ const MoreDetails = ({ count }) => {
   );
 };
 
-
-
 const ButtonWithIcon = withStyles((theme) => ({
   root: {
     margin: theme.spacing(1),
@@ -228,7 +226,9 @@ const useStyles = makeStyles((theme) => ({
   btnContainer: {
     margin: "auto",
     [theme.breakpoints.down("sm")]: {
-      display: "flex",
+      // display: "flex",
+      width: "100%",
+      textAlign: "right",
     },
   },
   mask: {

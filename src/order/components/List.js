@@ -6,6 +6,9 @@ import { TitleTypography } from "../../components/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSkeleton from "../../components/ListSkeleton";
 import { ORDERS_LINK } from "../../routerLinks";
+import compareProps from "../../utils/compareProps";
+import { INSTALLMENT_PAYMENT_LINK } from "../../routerLinks";
+
 // const Row = lazy(() => import("./Row"));
 const Row = lazy(() => import("./Row"));
 
@@ -44,21 +47,27 @@ const OrderList = ({ fetcher, url, ...restProps }) => {
   /* action */
 
   const handleClick = (id) => {
-    id && history.push(ORDERS_LINK + "/" + id);
+    console.log({ id });
+    id !== undefined && history.push(ORDERS_LINK + "/" + id);
+  };
+  const handlePay = (id) => {
+    history.push(INSTALLMENT_PAYMENT_LINK + "/" + id);
   };
 
   const header = () => <></>;
 
   const rowRenderer = (item, index) => {
     const id = item ? item.id : undefined;
+    const key = id !== undefined ? id : index;
     return (
-      id && (
-        <React.Suspense key={id || index} fallback={<ListSkeleton count={1} />}>
+      id !== undefined && (
+        <React.Suspense key={key} fallback={<ListSkeleton count={1} />}>
           <Row
-            key={id || index}
+            key={key}
             value={item}
             id={id}
             handleClick={() => handleClick(id)}
+            handlePay={() => handlePay(id)}
           />
         </React.Suspense>
       )
@@ -89,21 +98,14 @@ const OrderList = ({ fetcher, url, ...restProps }) => {
           <div className={classes.list}>{showList()}</div>
         </>
       ) : (
-        <TitleTypography color="secondary">
-          Une erreur s'est produite
-        </TitleTypography>
+        <TitleTypography color="secondary">...</TitleTypography>
       )}
     </>
   );
 };
 
 const isEqual = (prev, next) => {
-  return (
-    JSON.stringify({
-      url: prev !== null ? prev.url : "",
-      selected: prev !== null ? prev.selected : [],
-    }) === JSON.stringify({ url: next.url, selected: next.selected })
-  );
+  compareProps(prev, next, ["url"]);
 };
 
 export default React.memo(OrderList, isEqual);

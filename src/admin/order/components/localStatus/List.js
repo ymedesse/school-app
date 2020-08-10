@@ -10,8 +10,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import { TitleTypography } from "../../../../components/Typography";
 
-import { STATUS_UPDATE } from "../../container/constants";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",

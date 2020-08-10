@@ -20,7 +20,7 @@ export const createApi = async (userId, token, data) => {
 
 export const getSchoolsListApi = async () => {
   try {
-    const response = await fetch(`${API}/schools/partial-search`, {
+    const response = await fetch(`${API}/schools/partial-search?status=publish`, {
       method: "GET",
       headers: {
         Accept: "application/json",

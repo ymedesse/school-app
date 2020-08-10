@@ -12,7 +12,7 @@ import { MiniLabelText } from "../../../components/LabelValueTypography";
 
 const Row = ({ value, handleClick, isMobile }) => {
   const classes = useStyles();
-  
+
   return (
     <>
       <ListItem
@@ -20,7 +20,7 @@ const Row = ({ value, handleClick, isMobile }) => {
         role={undefined}
         button
         className={classes.list}
-        onClick={isMobile ? handleClick : () => {}}
+        onClick={handleClick && handleClick}
       >
         <Box display="flex" width="100%">
           <Box>

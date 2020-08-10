@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TypeFilter from "./TypeFilters";
 
 const Orders = ({ getFetcher, getReadUrl, getOrdersList, ...props }) => {
-  const [filter, setFilter] = React.useState({});
+  const [filter, setFilter] = React.useState({ type: "achat" });
   const fetcher = getFetcher();
   const classes = useStyles();
 
@@ -21,7 +21,7 @@ const Orders = ({ getFetcher, getReadUrl, getOrdersList, ...props }) => {
       <div className={classes.margin} />
       <TypeFilter handleChange={handleFilter("type")} />
       <React.Suspense fallback={<ListSkeleton count="50" />}>
-        <List fetcher={fetcher} url={url} />
+        <List fetcher={fetcher} url={url} type={filter.type} />
       </React.Suspense>
     </>
   );

@@ -1,17 +1,24 @@
 import React, { useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
+import { makeStyles, withStyles } from "@material-ui/styles";
+import MuiAlert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
-import PropTypes from "prop-types";
-import clsx from "clsx";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import ErrorIcon from "@material-ui/icons/Error";
-import InfoIcon from "@material-ui/icons/Info";
-import { amber, green } from "@material-ui/core/colors";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import WarningIcon from "@material-ui/icons/Warning";
-// import Slide from "@material-ui/core/Slide";
+
+const Alert = withStyles((theme) => ({
+  message: {
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+    },
+  },
+
+  action: {
+    [theme.breakpoints.down("sm")]: {
+      paddingLeft: "0px",
+    },
+  },
+}))(({ ...props }) => <MuiAlert elevation={6} variant="filled" {...props} />);
 
 /**
  *
@@ -20,8 +27,9 @@ import WarningIcon from "@material-ui/icons/Warning";
  * @param {function} nextClose  -  fonction a xécuter à la fermerture de la notification
  *
  */
-const Notifier = ({ notificationType, message, nextClose }) => {
+const Notifier = ({ notificationType, message, nextClose, title, action }) => {
   const [open, setOpen] = React.useState(false);
+  const classes = useStyles();
   useEffect(() => {
     setOpen(message ? true : false);
   }, [message]);
@@ -34,6 +42,23 @@ const Notifier = ({ notificationType, message, nextClose }) => {
     setOpen(false);
   };
 
+  const myAction = action ? (
+    <>
+      {" "}
+      {action(handleClose)}
+      <IconButton
+        aria-label="close"
+        color="inherit"
+        size="small"
+        onClick={() => {
+          setOpen(false);
+        }}
+      >
+        <CloseIcon fontSize="inherit" />
+      </IconButton>
+    </>
+  ) : undefined;
+
   return (
     <Snackbar
       // TransitionComponent="SlideTransition"
@@ -41,95 +66,28 @@ const Notifier = ({ notificationType, message, nextClose }) => {
       autoHideDuration={6000}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "center",
+        vertical: "bottom",
+        horizontal: "right",
       }}
-      // TransitionComponent={TransitionUp}
     >
-      <MySnackbarContentWrapper
+      <Alert
+        action={myAction}
         onClose={handleClose}
-        variant={notificationType}
-        message={!message ? "" : message}
-      />
+        severity={notificationType}
+      >
+        {title && <AlertTitle className={classes.title}>{title}</AlertTitle>}
+        {message && message}
+      </Alert>
     </Snackbar>
   );
 };
 
 export default Notifier;
 
-const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
-};
-
-const useStyles1 = makeStyles((theme) => ({
-  success: {
-    backgroundColor: green[600],
-  },
-  error: {
-    backgroundColor: theme.palette.error.dark,
-  },
-  info: {
-    backgroundColor: theme.palette.primary.main,
-  },
-  warning: {
-    backgroundColor: amber[700],
-  },
-  icon: {
-    fontSize: 20,
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing(1),
-  },
-  message: {
-    display: "flex",
-    alignItems: "center",
+const useStyles = makeStyles((theme) => ({
+  title: {
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "0px",
+    },
   },
 }));
-
-function MySnackbarContentWrapper(props) {
-  const classes = useStyles1();
-  const { className, message, onClose, variant, ...other } = props;
-  const Icon = variantIcon[variant];
-
-  return (
-    <SnackbarContent
-      className={clsx(classes[variant], className)}
-      aria-describedby="client-snackbar"
-      message={
-        <span id="client-snackbar" className={classes.message}>
-          <Icon className={clsx(classes.icon, classes.iconVariant)} />
-          {message}
-        </span>
-      }
-      action={[
-        <IconButton
-          key="close"
-          aria-label="close"
-          color="inherit"
-          onClick={onClose}
-        >
-          <CloseIcon className={classes.icon} />
-        </IconButton>,
-      ]}
-      {...other}
-    />
-  );
-}
-
-MySnackbarContentWrapper.propTypes = {
-  className: PropTypes.string,
-  message: PropTypes.string,
-  onClose: PropTypes.func,
-  variant: PropTypes.oneOf(["error", "info", "success", "warning"]).isRequired,
-};
-
-// function TransitionUp(props) {
-//   return <Slide {...props} direction="up" />;
-// }
-// function SlideTransition(props) {
-//   return <Slide {...props} direction="up" />;
-// }

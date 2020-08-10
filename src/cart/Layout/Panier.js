@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from "react";
 import useSWR, { trigger } from "swr";
-// import ErrorMessage from "../../components/ErrorMessage";
-import CheckBoxSkeleton from "../../components/CheckBoxSkeleton";
 import ErrorBoundary from "../../components/ErrorBoundary";
+import Grid from "@material-ui/core/Grid";
 import { CART } from "../containers/constants";
 import ListSkeleton from "../../components/ListSkeleton";
+import Facturation from "../../Paiement/Billing/Facturation";
+import compareProps from "../../utils/compareProps";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
+import { SHIPPING_LINK, COMMANDE_SHIPPING_LINK } from "../../routerLinks";
 const CartList = React.lazy(() => import("../components/CartList"));
 
 const Panier = ({
   file = CART,
   removeFromCart,
   setCartQuantities,
+  setCartQuantitiesOnly,
   exportRefreshCartFunc,
   getFetcher,
   getReadCartUrl,
+  faturetionProps,
+  setSuccess,
+  history,
 }) => {
   const url = getReadCartUrl();
   const { data: resultat } = useSWR(url, getFetcher(), {
@@ -26,13 +34,14 @@ const Panier = ({
     trigger(url);
   };
 
-  // const error = !resultat ? true : resultat && resultat.error;
+  const error = !resultat ? true : resultat && resultat.error;
   const [state, setState] = useState({
     values: {},
     fieldError: false,
+    submiting: false,
   });
 
-  const { values, fieldError } = state;
+  const { values, fieldError, submiting } = state;
 
   useEffect(() => {
     if (resultat && !resultat.error) {
@@ -44,11 +53,36 @@ const Panier = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultat]);
 
-  const updateCart = () => {
-    const cart = resultat[`${file}`];
+  const setSubmiting = (val) => {
+    setState((state) => ({ ...state, submiting: val }));
+  };
 
-    if (!fieldError && JSON.stringify(values) !== JSON.stringify(cart))
-      setCartQuantities(values, () => {}, file);
+  const checkChange = () => {
+    const cart = resultat[`${file}`];
+    return !fieldError && JSON.stringify(values) !== JSON.stringify(cart);
+  };
+
+  const updateCart = async (next) => {
+    const changed = checkChange();
+    if (changed) {
+      setSubmiting(true);
+      await setCartQuantities(values, file, (val) => {
+        setSuccess("Votre panier a été mise à jour avec succès");
+        setState((state) => ({ ...state, values: val, submiting: false }));
+      });
+      // setSubmiting(false);
+    }
+  };
+
+  const submitFacturation = async () => {
+    const changed = checkChange();
+    if (changed) {
+      setSubmiting(true);
+      await setCartQuantitiesOnly(values, file);
+    }
+    history.push(
+      faturetionProps.isCommande ? COMMANDE_SHIPPING_LINK : SHIPPING_LINK
+    );
   };
 
   const getCartListe = (listeId) => {
@@ -97,29 +131,45 @@ const Panier = ({
   };
 
   return (
-    <ErrorBoundary>
-      <React.Suspense fallback={<ListSkeleton count={2} height={100} margin="50px"/>}>
-        <CartList
-          cart={values}
-          removeFromCart={handleRemoveFromCart}
-          updateCart={updateCart}
-          setItemCount={setItemCount}
-          refresh={refresh}
-          fieldError={fieldError}
-        />
-      </React.Suspense>
-    </ErrorBoundary>
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={9}>
+        {submiting && <LinearProgress />}
+        {!error ? (
+          <ErrorBoundary>
+            <React.Suspense
+              fallback={<ListSkeleton count={5} height={50} margin="20px" />}
+            >
+              <CartList
+                file={file}
+                cart={values}
+                removeFromCart={handleRemoveFromCart}
+                updateCart={updateCart}
+                setItemCount={setItemCount}
+                refresh={refresh}
+                fieldError={fieldError}
+              />
+            </React.Suspense>
+          </ErrorBoundary>
+        ) : (
+          <LinearProgress />
+        )}
+      </Grid>
+
+      <Grid xs={12} sm={3} item>
+        <React.Suspense fallback={<ListSkeleton count={2} height={50} />}>
+          <Facturation
+            {...faturetionProps}
+            handleSubmit={submitFacturation}
+            initialExpanded={true}
+          />
+        </React.Suspense>
+      </Grid>
+    </Grid>
   );
 };
 
 const isEqual = (prev, next) => {
-  return (
-    JSON.stringify(
-      prev !== null
-        ? { cart: prev.cart, file: prev.file }
-        : { cart: {}, file: undefined }
-    ) === JSON.stringify({ cart: next.cart, file: next.file })
-  );
+  return compareProps(prev, next, ["cart", "file", "faturetionProps"]);
 };
 
 export default React.memo(Panier, isEqual);

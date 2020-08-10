@@ -6,9 +6,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
 import Link from "@material-ui/core/Link";
-import HomeIcon from "@material-ui/icons/Home";
-import WhatshotIcon from "@material-ui/icons/Whatshot";
-import GrainIcon from "@material-ui/icons/Grain";
 import compareProps from "../utils/compareProps";
 import { getBreadcrumbsRoute } from "./config";
 
@@ -75,22 +72,3 @@ const useStyles = makeStyles((theme) => ({
     height: 20,
   },
 }));
-
-const demoRoutes = [
-  {
-    name: "Material-UI",
-    icon: (props) => <HomeIcon {...props} />,
-    href: "/",
-    handleClick: () => {},
-  },
-  {
-    name: "Core",
-    icon: (props) => <WhatshotIcon {...props} />,
-    href: "/getting-started/installation/",
-    handleClick: () => {},
-  },
-  {
-    name: "Breadcrumb",
-    icon: (props) => <GrainIcon {...props} />,
-  },
-];

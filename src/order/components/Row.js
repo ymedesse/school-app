@@ -21,7 +21,7 @@ import {
   MiniLabelText,
 } from "../../components/LabelValueTypography";
 
-const MobileRow = ({ value = {}, handleClick }) => {
+const MobileRow = ({ value = {}, handlePay, handleClick }) => {
   const isMobile = useMobile();
   const {
     status,
@@ -42,7 +42,7 @@ const MobileRow = ({ value = {}, handleClick }) => {
         ContainerComponent="div"
         dense
         button={isMobile}
-        onClick={() => isMobile && handleClick()}
+        onClick={() => (isMobile ? handleClick() : () => {})}
       >
         <>
           <CssBaseline />
@@ -65,7 +65,9 @@ const MobileRow = ({ value = {}, handleClick }) => {
                   {dateToTextNumber(createdAt)}
                 </MiniLabelText>
                 {leftToPay !== 0 && (
-                  <LabelText color="secondary">{` ${leftToPay}`}</LabelText>
+                  <LabelText color="secondary">
+                    {` solde dû ${leftToPay}`}
+                  </LabelText>
                 )}
               </Box>
             </Box>
@@ -96,6 +98,7 @@ const MobileRow = ({ value = {}, handleClick }) => {
                     <IconButton
                       size="small"
                       // style={{ padding: "4px" }}
+                      onClick={handlePay}
                       color="secondary"
                     >
                       <CreditCardIcon />

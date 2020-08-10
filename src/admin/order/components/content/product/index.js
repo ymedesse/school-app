@@ -26,25 +26,8 @@ const OrderProducts = ({
 }) => {
   const [view, setView] = React.useState(false);
   const {
-    _id,
-    id,
-    // date_created,
-    completedDate,
-    updatedAt,
-    shipping,
     localStatus,
-    status,
-    user,
-    contents,
-    payment,
-    customerData,
-    totalAmount,
-    leftToPay = 0,
-    notes,
     count,
-    type,
-    createdBy,
-    createdAt,
   } = value;
 
   const labelView = () => (view ? "cacher" : "Visualiser");

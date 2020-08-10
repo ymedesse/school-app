@@ -9,7 +9,6 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import HomeIcon from "@material-ui/icons/Home";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 
 import ErrorMessage from "../../components/ErrorMessage";
 import { ButtonWithIcon } from "../../components/Buttons";
@@ -90,6 +89,7 @@ const Fournitures = ({ schoolSlug, classeSlug, ...props }) => {
   const getData = () => {
     return data;
   };
+
   return !error ? (
     <>
       {getHeader()}
@@ -100,7 +100,7 @@ const Fournitures = ({ schoolSlug, classeSlug, ...props }) => {
           </React.Suspense>
         </Grid>
         <Grid item sm={4}>
-          <Paper>CI, ce1</Paper>
+          {/* <Paper>Pulicité</Paper> */}
         </Grid>
       </Grid>
     </>

@@ -1,29 +1,69 @@
 import React from "react";
-// import { getProductsApi } from "./container/api";
+import { useHistory } from "react-router-dom";
 import context from "../../../rootContext/context";
 import ProductsList from "./List";
 import SearchField from "../../../components/SearchField";
+import { ButtonSimple } from "../../../components/Buttons";
 import CheckBoxSkeleton from "../../../components/CheckBoxSkeleton";
 import Fuse from "fuse.js";
-
+import { CART_LINK } from "../../../routerLinks";
 const Products = ({ data, ...props }) => {
+  const history = useHistory();
   const { products, classe, school, _id: listeId } = data;
   const rootContext = React.useContext(context);
 
   const { addToCart, cart, commande } = rootContext.cart;
+  const { setFullSuccess, performFullErrorAlert } = rootContext.alert;
 
-  const addItemToCart = (file = "cart") => (productId, quantity = 1) => {
+  const addItemToCart = (file = "cart") => (product, quantity = 1) => {
+    const title = file === "cart" ? "panier" : "liste à commander";
+    const { _id, name } = product;
     addToCart(
-      productId,
+      _id,
       {
         list: listeId,
         quantity,
         classe: classe._id,
         school: school._id,
       },
-      () => {},
+      (data) => {
+        if (data) {
+          const { error } = data;
+          performError(error, title);
+          !error && performSuccess({ quantity, name }, title);
+        }
+      },
       file
     );
+  };
+
+  const performError = (error, title) =>
+    error &&
+    performFullErrorAlert(
+      "Désolé, ce produit n'a pas pû être ajouter à votre " + title,
+      { title: "Ajout au panier" }
+    );
+
+  const performSuccess = (product, typeTitle) => {
+    const { quantity, name } = product;
+
+    setFullSuccess({
+      message: `Votre ${typeTitle} contient ${quantity} quantité(s) de ${name}`,
+      title: `Ajout à votre ${typeTitle}`,
+      action: (handleClose) => (
+        <ButtonSimple
+          onClick={() => {
+            handleClose();
+            history.push(CART_LINK);
+          }}
+          color="inherit"
+          variant="text"
+          size="small"
+        >
+          Mon panier
+        </ButtonSimple>
+      ),
+    });
   };
 
   const [values, setValues] = React.useState({
@@ -46,12 +86,13 @@ const Products = ({ data, ...props }) => {
 
   const getSearchResult = (val) => {
     const result = val === "" ? products : fuse.search(val).map((v) => v.item);
+
     return result;
   };
 
-  const handleFilter = (name) => (event) => {
+  const handleFilter = (event) => {
     const val = event.target.value;
-    setValues({ ...values, search: val, accesses: getSearchResult(val) });
+    setValues({ ...values, search: val, listes: getSearchResult(val) });
   };
 
   const getProducts = (file = "cart") => {
@@ -69,12 +110,14 @@ const Products = ({ data, ...props }) => {
     <>
       <SearchField
         style={{ width: "100%", margin: "8px 0px" }}
-        inputFieldProps={{ onChange: handleFilter("search") }}
+        inputFieldProps={{ onChange: handleFilter }}
         placeholder="Chercher par isbn, nom du manuel ..."
         showLeftToogle={false}
       />
 
-      <React.Suspense fallback={<CheckBoxSkeleton count={5} height={50} />}>
+      <React.Suspense
+        fallback={<CheckBoxSkeleton count={5} height={40} margin="24px" />}
+      >
         <ProductsList
           addItemToCart={addItemToCart("cart")}
           addItemToCommande={addItemToCart("commande")}

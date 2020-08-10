@@ -7,7 +7,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import ListSkeleton from "../../../../components/ListSkeleton";
 
-import { CREATE_ACTION, UPDATE_ACTION } from "../../container/accesses";
+import { CREATE_ACTION } from "../../container/accesses";
 
 const Content = React.lazy(() => import("./index"));
 

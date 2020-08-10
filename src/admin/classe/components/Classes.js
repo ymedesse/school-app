@@ -60,7 +60,6 @@ const Schools = ({
     error && type === "string" && setError(error);
   };
   const onCreate = (val, next) => {
-    console.log({ valinOncreate: val });
     create(val, ({ error, data }) => {
       performErrorAlert(error);
       if (!error) {

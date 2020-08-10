@@ -91,10 +91,10 @@ const InstallmentPayement = ({ match, history, location }) => {
       <Backdrop
         className={classes.backdrop}
         open={submiting}
-        onClick={() => setSubmiting(false)}
+        // onClick={() => setSubmiting(false)}
       >
         <CircularProgress color="inherit" />
-        <div>k,k,kk</div>
+        <div> Si vous ne recevez pas une demande de validation sur votre téléphone, veuillez vérifier les validation en attente </div>
       </Backdrop>
     </>
   );

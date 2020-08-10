@@ -20,6 +20,8 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { CART } from "../containers/constants";
 import { TitleTypography } from "../../components/Typography";
 import EmptyCart from "./CartEmpty";
+import compareProps from "../../utils/compareProps";
+
 const CartList = ({
   file,
   cart,
@@ -138,7 +140,7 @@ const CartList = ({
   };
 
   const isCommande = file !== CART;
-  const tabTitle = isCommande ? "dans votre panier" : "à commander";
+  const tabTitle = !isCommande ? "dans votre panier" : "à commander";
 
   return (
     <>
@@ -213,12 +215,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const isEqual = (prev, next) => {
-  return (
-    JSON.stringify({
-      cart: prev !== null ? prev.cart : {},
-      fieldError: prev !== null ? prev.fieldError : {},
-    }) === JSON.stringify({ cart: next.cart, fieldError: next.fieldError })
-  );
+  return compareProps(prev, next, ["file", "cart", "fieldError"]);
 };
 
 export default React.memo(CartList, isEqual);

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   iconButton: {
-    padding: "12px",
+    // padding: "12px",
     [theme.breakpoints.down("sm")]: {
       padding: "8px",
     },
@@ -27,7 +27,7 @@ const CommandeBadge = withStyles((theme) => ({
     // right: -3,
     // top: 13,
     backgroundColor: orange[700],
-    padding: "0 4px",
+    // padding: "0 4px",
   },
 }))(Badge);
 

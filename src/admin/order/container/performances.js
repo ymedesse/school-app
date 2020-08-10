@@ -1,18 +1,11 @@
 // import actions from "./actions";
-import { updateStatusApi, updateApi, updateLocalStatusApi } from "./api";
+import { updateStatusApi } from "./api";
 import { fetcherWithToken } from "../../../utils/fecthers";
 import { API } from "../../../config";
 import queryString from "query-string";
 import { LOCAL_STATUS } from "./constants";
 
 const performances = (dispatch, auth) => {
-  const update = async (_id, data, next) => {
-    const { user, token } = auth;
-    updateApi(user._id, token, _id, data).then((data) => {
-      next && next(data);
-    });
-  };
-
   const updateStatus = (id, type, status, next) => {
     const { user, token } = auth;
     updateStatusApi(user._id, token, id, status, type).then((data) => {

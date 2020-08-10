@@ -3,7 +3,8 @@ import Footer from "./Footer";
 import Header from "./Header";
 import List from "./List";
 const Content = ({ handleClose, values, removeItem, file }) => {
-  const { count } = values;
+  const { count, totalDetail = {}, total = 0 } = values;
+
   return (
     <>
       <Header file={file} count={count} />
@@ -11,7 +12,7 @@ const Content = ({ handleClose, values, removeItem, file }) => {
       <Footer
         count={count}
         handleClose={handleClose}
-        amount={values.total}
+        amount={totalDetail.sale_price || total}
         file={file}
       />
     </>

@@ -1,4 +1,3 @@
-import React from "react";
 import purple from "@material-ui/core/colors/purple";
 import blueGrey from "@material-ui/core/colors/blueGrey";
 import orange from "@material-ui/core/colors/orange";

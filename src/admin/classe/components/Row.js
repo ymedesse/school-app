@@ -58,12 +58,12 @@ const Row = ({
             <TitleTypography
               variant="subtitle2"
               color="primary"
-              className={classes.inline}
+              className={classes.inline || value.name}
             >
-              {value.name}
+              {value.code}
             </TitleTypography>
           }
-          secondary={`${value.address} -- ${value.phone}`}
+          secondary={value.name || ""}
         />
         {!checkable && (
           <ListItemSecondaryAction
