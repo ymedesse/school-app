@@ -1,4 +1,5 @@
 import { getMin } from "./utils";
+import { LOCAL_PAYMENT_WAY } from "../container/constants";
 
 export default (file) => (values) => {
   const errors = {};
@@ -16,15 +17,17 @@ const checkPayment = (values, file) => {
   const { payment, cart } = values;
   let { amount, method } = payment;
   const isMomo = method === "momo";
+  const isLocalPaiement = method === LOCAL_PAYMENT_WAY;
+
   amount = parseStringToInt(amount);
 
-  if (isMomo) {
+  if (isMomo || isLocalPaiement) {
     const min = getMin(cart.totalAmount, file);
     if (amount <= 0) {
       errors.amount = "Important";
     }
 
-    if (!payment.phone || payment.phone === "") {
+    if (isMomo && (!payment.phone || payment.phone === "")) {
       errors.phone = "Important";
     }
 

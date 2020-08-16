@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import context from "../rootContext/context";
 import MobileLeftMenu from "./MobileLeftNavBar";
-import SearchField from "./components/Search";
+// import SearchField from "./components/Search";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 // import Badge from "@material-ui/core/Badge";
@@ -23,10 +23,11 @@ import LocalMallIcon from "@material-ui/icons/LocalMall";
 import LazyLoad from "../components/LazyLoad";
 import clsx from "clsx";
 import SchoolMenu from "../fourniture/school/schoolHeaderMenu";
+import LbuMenu from "../lbu/headerMenu";
 import ShoppingCart from "../cart/components/ShortViews";
 const drawerWidth = 240;
 
-const PrimarySearchAppBar = () => {
+const HeaderAppBar = () => {
   const classes = useStyles();
   const signout = useLogOut();
   const theme = useTheme();
@@ -64,7 +65,7 @@ const PrimarySearchAppBar = () => {
       onClick={() => history.push("/")}
       color="inherit"
     >
-      Zero Stress
+      LBU, Zéro Stress
     </Button>
   );
 
@@ -137,7 +138,8 @@ const PrimarySearchAppBar = () => {
 
       {!mobile && (
         <>
-          <SearchField />
+          {/* <SearchField /> */}
+          <LbuMenu />
           <SchoolMenu />
         </>
       )}
@@ -167,7 +169,7 @@ const PrimarySearchAppBar = () => {
   return adminMode ? showAdminNavBar() : showLiveNavBar();
 };
 
-export default PrimarySearchAppBar;
+export default HeaderAppBar;
 
 const useStyles = makeStyles((theme) => {
   return {

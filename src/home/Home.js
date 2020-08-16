@@ -5,13 +5,15 @@ import { useHistory } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import purple from "@material-ui/core/colors/purple";
+import Link from "@material-ui/core/Link";
 
 import Box from "@material-ui/core/Box";
 import bannerImag from "../assets/emptyHome.svg";
 import { makeStyles } from "@material-ui/core/styles";
 import { SCHOOL_LIST_LINK, CLASSES_LINK } from "../routerLinks";
-import { LabelText } from "../components/LabelValueTypography";
+import { LabelText, ValueText } from "../components/LabelValueTypography";
 import { BigTypography, SubLargeTypography } from "../components/Typography";
+import HomePub from "../lbu/HomePub";
 
 import useMediaDetector from "../components/hook/useMediaDetector";
 const SchoolSelector = React.lazy(() =>
@@ -28,7 +30,8 @@ const Home = () => {
   const handleSchoolChange = (event) => {
     setCurrentSchool(event.target.value);
   };
-  const handleClickAllSchool = () => {
+  const handleClickAllSchool = (e) => {
+    e.preventDefault();
     history.push(SCHOOL_LIST_LINK);
   };
 
@@ -96,26 +99,28 @@ const Home = () => {
               </SubLargeTypography>
             )}
 
-            <Button
-              // size="medium"
-              // variant="h6"
-              className={classes.seconButton}
-              disableElevation
-              variant="text"
-              onClick={handleClickAllSchool}
-              color="secondary"
-            >
-              Consultez la liste des écoles
-            </Button>
+            <ValueText className={classes.seconButton} color="secondary">
+              <Link
+                color="secondary"
+                underline="none"
+                href={SCHOOL_LIST_LINK}
+                onClick={handleClickAllSchool}
+              >
+                Consultez la liste des écoles
+              </Link>
+            </ValueText>
+
             <LabelText> ou </LabelText>
-            <Button
-              className={classes.seconButton}
-              disableElevation
-              variant="text"
-              color="primary"
-            >
-              Ajouter votre école
-            </Button>
+            <ValueText className={classes.seconButton} color="secondary">
+              <Link
+                color="primary"
+                href="#"
+                underline="none"
+                onClick={() => {}}
+              >
+                Ajouter votre école
+              </Link>
+            </ValueText>
           </div>
         </div>
       </Grid>
@@ -131,7 +136,12 @@ const Home = () => {
     </Grid>
   );
 
-  return <div>{content} </div>;
+  return (
+    <div>
+      {content}
+      <HomePub />
+    </div>
+  );
 };
 
 export default Home;
@@ -225,3 +235,12 @@ const useStyles = makeStyles((theme) => ({
   },
   suspense: {},
 }));
+
+const mainFeaturedPost = {
+  title: "Title of a longer featured blog post",
+  description:
+    "Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.",
+  image: "https://source.unsplash.com/random",
+  imgText: "main image description",
+  linkText: "Continue reading…",
+};

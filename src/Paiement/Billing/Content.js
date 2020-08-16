@@ -6,14 +6,15 @@ import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
 import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
 import CheckBoxLine from "../../components/CheckBoxLine";
 import MomoContent from "./MomoContent";
+import CashContent from "./CashContent";
 import Phone from "../../assets/phone28.PNG";
 import {
   MOMO_PAYMENT_WAY,
   LOCAL_PAYMENT_WAY,
-  VIREMENT_PAYMENT_WAY,
+  // VIREMENT_PAYMENT_WAY,
   MOMO_PAYMENT_WAY_TITLE,
   LOCAL_PAYMENT_WAY_TITLE,
-  VIREMENT_PAYMENT_WAY_TITLE,
+  // VIREMENT_PAYMENT_WAY_TITLE,
 } from "../container/constants";
 
 import compareProps from "../../utils/compareProps";
@@ -65,7 +66,7 @@ const MethodsContent = ({ form, maxAmount, showButton }) => {
 };
 
 const isEqual = (prev, next) => {
-  return compareProps(prev, next, ["totalAmount", "maxAmount","showButton"]);
+  return compareProps(prev, next, ["totalAmount", "maxAmount", "showButton"]);
 };
 
 // export default MethodsContent;
@@ -87,13 +88,13 @@ const methods = [
   {
     id: LOCAL_PAYMENT_WAY,
     title: LOCAL_PAYMENT_WAY_TITLE,
-    content: () => <></>,
+    content: (props) => <CashContent {...props} />,
   },
-  {
-    id: VIREMENT_PAYMENT_WAY,
-    title: VIREMENT_PAYMENT_WAY_TITLE,
-    content: () => <></>,
-  },
+  // {
+  //   id: VIREMENT_PAYMENT_WAY,
+  //   title: VIREMENT_PAYMENT_WAY_TITLE,
+  //   content: () => <></>,
+  // },
 ];
 
 const Accordion = withStyles({
