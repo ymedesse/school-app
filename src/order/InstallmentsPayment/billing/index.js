@@ -20,7 +20,14 @@ const InstallmentPayement = ({ match, history, location }) => {
   const pathName = location.pathname;
 
   const rootContext = React.useContext(context);
-  const [submiting, setSubmiting] = React.useState(false);
+  const [state, setState] = React.useState({
+    submiting: false,
+    isMomo: false,
+  });
+  const { submiting, isMomo } = state;
+  const setSubmiting = (val) =>
+    setState((state) => ({ ...state, submiting: val }));
+
   const submitQosPayment = useQos({ setSubmiting });
 
   const {
@@ -35,24 +42,24 @@ const InstallmentPayement = ({ match, history, location }) => {
   const classes = useStyles();
 
   const handleSubmitPayment = async (values) => {
-    setSubmiting(true);
     const { payment: paymentInfo } = values;
-    const paymentData = await submitQosPayment(paymentInfo);
+    const isMomo = paymentInfo.method === "momo";
 
-    if (paymentData) {
-      const { date_paid, serviceref } = { ...paymentData };
-      delete paymentData.date_paid;
-      delete paymentData.serviceref;
-      delete paymentData.responsemsg;
+    setState((state) => ({ ...state, submiting: true, isMomo }));
 
-      const payment = {
-        ...paymentInfo,
-        date_paid,
-        transaction_id: serviceref,
-        transaction: { ...paymentData },
+    const payment = isMomo
+      ? await submitQosPayment(paymentInfo, () => setSubmiting(false))
+      : paymentInfo;
+    console.log({ payment });
+
+    if (payment) {
+      const data = {
+        ...values,
+        payment,
       };
 
-      submitInstallmentPayment(id, payment, (resultat) => {
+      console.log({ data });
+      submitInstallmentPayment(id, data, (resultat) => {
         if (resultat) {
           const { error } = resultat;
           error && performErrorAlert(error);
@@ -94,10 +101,12 @@ const InstallmentPayement = ({ match, history, location }) => {
         // onClick={() => setSubmiting(false)}
       >
         <CircularProgress color="inherit" />
-        <div style={{ fontSize: "1rem" }}>
-          Si vous ne recevez pas une demande de validation automatiquement,
-          veuillez vérifier les validations en attente,
-        </div>
+        {isMomo && (
+          <div style={{ fontSize: "1rem" }}>
+            Si vous ne recevez pas une demande de validation automatiquement,
+            veuillez vérifier les validations en attente,
+          </div>
+        )}
       </Backdrop>
     </>
   );

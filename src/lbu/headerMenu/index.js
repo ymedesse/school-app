@@ -8,10 +8,8 @@ import yellow from "@material-ui/core/colors/yellow";
 const LbuMenu = () => {
   const Mclasses = useStyles();
 
-  const onClick = (link, handleClick) => {
+  const onClick = (handleClick) => {
     handleClick();
-    var win = window.open(link, "_blank");
-    win.focus();
   };
 
   return (
@@ -23,7 +21,7 @@ const LbuMenu = () => {
           disableElevation={true}
           size="large"
           color="inherit"
-          onClick={onClick}
+          onClick={()=>onClick(handleClick)}
           className={Mclasses.button}
         >
           Librairie LBU

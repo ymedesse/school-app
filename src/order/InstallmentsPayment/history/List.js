@@ -15,6 +15,8 @@ import CreditCardIcon from "@material-ui/icons/CreditCard";
 import IconButtonMedia from "../../../components/IconButtonMedia";
 import { LabelText, ValueText } from "../../../components/LabelValueTypography";
 import { INSTALLMENT_PAYMENT_LINK } from "../../../routerLinks";
+import DialogQrCode from "../../../Paiement/components/DialogQrCode";
+import { LOCAL_PAYMENT_WAY } from "../../../Paiement/container/constants";
 
 const Row = lazy(() => import("./Row"));
 
@@ -25,15 +27,27 @@ const OrderList = ({
   currentOrder,
   history,
   inAdminMode,
+  location,
   ...restProps
 }) => {
   const classes = useStyles();
 
+  const { historyPaymentId } = location.state || {};
   const [state, setState] = useState({
     payment: [],
+    openQrCodeDialog: false,
+    currentPayment: undefined,
   });
 
-  const { payment, totalAmount, leftToPay } = state;
+  const {
+    payment,
+    totalAmount,
+    leftToPay,
+    currentPayment,
+    openQrCodeDialog,
+    id: orderId,
+    type,
+  } = state;
 
   const { data: sourceData } = useSWR(url, fetcher, {
     refreshInterval: 0,
@@ -48,10 +62,26 @@ const OrderList = ({
 
   useEffect(() => {
     if (sourceData && !sourceData.error) {
-      setState((state) => ({ ...state, ...sourceData }));
+      let forOpen = {};
+
+      if (historyPaymentId) {
+        const pay = getHistoryPayment(sourceData.payment);
+        forOpen = pay
+          ? {
+              openQrCodeDialog: true,
+              currentPayment: pay,
+            }
+          : {};
+      }
+      setState((state) => ({ ...state, ...sourceData, ...forOpen }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sourceData]);
+
+  const getHistoryPayment = (payments) => {
+    const val = payments.find((item) => item._id === historyPaymentId);
+    return val;
+  };
 
   const handlePay = () => {
     history.push(INSTALLMENT_PAYMENT_LINK + "/" + id);
@@ -73,7 +103,7 @@ const OrderList = ({
           </Box>
         </Box>
 
-        {leftToPay !== 0 && (
+        {leftToPay > 0 && (
           <Box textAlign="right">
             <Box textAlign="right">
               <LabelText>Solde dû : </LabelText>
@@ -99,16 +129,48 @@ const OrderList = ({
     );
   };
 
+  const isLocalPayment = (item) => item.method === LOCAL_PAYMENT_WAY;
+
+  const handleOpenQrCode = (item) => {
+    isLocalPayment(item) &&
+      setState((state) => ({
+        ...state,
+        openQrCodeDialog: true,
+        currentPayment: item,
+      }));
+  };
+
   const rowRenderer = (item, index) => {
     const id = item ? item._id : undefined;
     return (
       id && (
         <React.Suspense key={id || index} fallback={<ListSkeleton count={1} />}>
-          <Row key={id || index} value={item} />
+          <Row
+            key={id || index}
+            value={item}
+            openQrCode={() => handleOpenQrCode(item)}
+            isLocalPayment={isLocalPayment(item)}
+          />
         </React.Suspense>
       )
     );
   };
+
+  const showDialog = () =>
+    openQrCodeDialog && (
+      <DialogQrCode
+        externalOpen={openQrCodeDialog}
+        setTExternalOpen={(val) =>
+          setState((state) => ({
+            ...state,
+            currentPayment: undefined,
+            openQrCodeDialog: false,
+          }))
+        }
+        qrCode={currentPayment.qrCode}
+        order={{ id: orderId, type }}
+      />
+    );
 
   const showList = () => (
     <>
@@ -136,7 +198,10 @@ const OrderList = ({
   return (
     <>
       {!error ? (
-        <div className={classes.list}>{showList()}</div>
+        <div className={classes.list}>
+          {showList()}
+          {showDialog()}
+        </div>
       ) : (
         <TitleTypography color="secondary">
           Une erreur s'est produite

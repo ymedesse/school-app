@@ -15,7 +15,10 @@ const CashBody = ({ maxAmount, showButton = false }) => {
         container
       >
         <Grid item xs={12}>
-          <ValueText>Saisissez le montant à payer</ValueText>
+          <ValueText>
+            Avec ce mode de paiment, vous recevrez un Qr Code qui vous servira
+            d'éffectué un paiement dans notre magasin de vente.
+          </ValueText>
         </Grid>
 
         <Grid item xs={12}>

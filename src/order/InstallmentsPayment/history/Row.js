@@ -9,6 +9,8 @@ import { dateToTextNumber } from "../../../utils";
 import compareProps from "../../../utils/compareProps";
 import { getStatusColor } from "../../container/utils";
 import useMobile from "../../../components/hook/useMediaDetector";
+import { ButtonWithIcon } from "../../../components/Buttons";
+import CropFreeIcon from "@material-ui/icons/CropFree";
 
 import {
   LabelText,
@@ -16,9 +18,9 @@ import {
   MiniLabelText,
 } from "../../../components/LabelValueTypography";
 
-const MobileRow = ({ value = {}, handleClick }) => {
+const MobileRow = ({ value = {}, isLocalPayment, openQrCode }) => {
   const isMobile = useMobile();
-  const { method_title, date_paid, phone, status, amount, id } = value;
+  const { method_title, createdAt, phone, status, amount, id } = value;
 
   const statusColor = getStatusColor(status.id);
   const classes = useStyles({ statusColor });
@@ -30,7 +32,6 @@ const MobileRow = ({ value = {}, handleClick }) => {
         ContainerComponent="div"
         dense
         button={isMobile}
-        onClick={() => isMobile && handleClick()}
       >
         <>
           <CssBaseline />
@@ -52,7 +53,7 @@ const MobileRow = ({ value = {}, handleClick }) => {
               </Box>
               <Box>
                 <MiniLabelText color="inherit">
-                  {dateToTextNumber(date_paid)}
+                  {dateToTextNumber(createdAt)}
                 </MiniLabelText>
                 {phone && (
                   <LabelText color="inherit"> par le :{` ${phone}`}</LabelText>
@@ -64,6 +65,12 @@ const MobileRow = ({ value = {}, handleClick }) => {
               <ValueText variant="subtitle2" className={classes.purple}>
                 {amount} Fcfa
               </ValueText>
+
+              {isLocalPayment && (
+                <ButtonWithIcon onClick={openQrCode} endIcon={<CropFreeIcon />}>
+                  qrcode
+                </ButtonWithIcon>
+              )}
             </Box>
           </Box>
         </>
@@ -88,12 +95,3 @@ const useStyles = makeStyles((theme) => ({
     color: purple[500],
   },
 }));
-
-// <ButtonWithIcon
-// variant="outlined"
-// color="secondary"
-// disableElevation
-// startIcon={<CreditCardIcon />}
-// >
-// Payer
-// </ButtonWithIcon>

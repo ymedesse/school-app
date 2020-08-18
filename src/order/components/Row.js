@@ -64,7 +64,7 @@ const MobileRow = ({ value = {}, handlePay, handleClick }) => {
                 <MiniLabelText color="inherit">
                   {dateToTextNumber(createdAt)}
                 </MiniLabelText>
-                {leftToPay !== 0 && (
+                {leftToPay > 0 && (
                   <LabelText color="secondary">
                     {` solde dû ${leftToPay}`}
                   </LabelText>

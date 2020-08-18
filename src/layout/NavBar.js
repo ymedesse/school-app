@@ -36,7 +36,6 @@ const HeaderAppBar = () => {
   const history = useHistory();
   // const [authenticatedUser, setAuthenticatedUser] = useState(false);
   const [open, setOpen] = useState(false);
-
   const rootContext = useContext(context);
 
   const { cart, removeFromCart, commande = {} } = rootContext.cart;
@@ -136,10 +135,10 @@ const HeaderAppBar = () => {
 
       <div className={classes.grow} />
 
+      <LbuMenu />
       {!mobile && (
         <>
           {/* <SearchField /> */}
-          <LbuMenu />
           <SchoolMenu />
         </>
       )}

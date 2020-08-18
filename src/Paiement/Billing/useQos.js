@@ -7,16 +7,16 @@ const useQosPayment = ({ setSubmiting }) => {
   const { processQosPayment, checkQosPaymentStatus } = rootContext.checkout;
   const { performErrorAlert } = rootContext.alert;
 
-  const defaultErrorAlert = (errorMessage) => {
+  const defaultErrorAlert = (errorMessage, error) => {
     setSubmiting && setSubmiting(false);
     performErrorAlert(errorMessage);
+    console.log({ error });
   };
 
   const performPaymentPending = async ({ paymentData, paymentInfo }) => {
     const { transref } = paymentData;
-    const { phone } = paymentInfo;
 
-    let ckeckData = await checkPendingPayment(transref, phone);
+    let ckeckData = await checkPendingPayment(transref, paymentInfo);
     const newResponseCode = ckeckData.responsecode;
 
     return newResponseCode === "-1"
@@ -25,7 +25,7 @@ const useQosPayment = ({ setSubmiting }) => {
           ckeckData
         )
       : newResponseCode === "00"
-      ? ckeckData
+      ? ckeckData.payment
       : defaultErrorAlert(
           "Une erreur s'est produite lors de la vérification du status",
           ckeckData
@@ -70,12 +70,16 @@ const useQosPayment = ({ setSubmiting }) => {
     // };
   };
 
-  const checkPendingPayment = async (transref, phone) => {
-    let data = await checkQosPaymentStatus({ transref, phone });
+  const checkPendingPayment = async (
+    transref,
+    { phone, method_title, amount }
+  ) => {
+    const val = { transref, phone, method_title, amount };
+    let data = await checkQosPaymentStatus(val);
     if (data) {
       let { responsemsg } = data;
       while (["Pending", "PENDING"].indexOf(responsemsg) !== -1) {
-        data = await checkQosPaymentStatus({ transref, phone });
+        data = await checkQosPaymentStatus(val);
         if (data) responsemsg = data.responsemsg;
       }
       return data;

@@ -22,7 +22,7 @@ const LbuHomePub = () => {
 
   const title = () => (
     <BigTypography className={classes.title} color="inherit" gutterBottom>
-      Trouvez plus de choix sur notre site officiel
+      Trouvez plus de choix de produits sur notre site
     </BigTypography>
   );
   const showUrl = () => (
@@ -53,7 +53,7 @@ const LbuHomePub = () => {
           />
         </Grid>
 
-        <Grid style={{ textAlign: "center" }} sm={7} xs={12}>
+        <Grid item style={{ textAlign: "center" }} sm={7} xs={12}>
           <div className={classes.margin} />
           {!isMobile && title()}
           <div className={classes.margin} />

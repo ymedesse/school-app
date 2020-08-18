@@ -19,9 +19,10 @@ import {
 
 import compareProps from "../../utils/compareProps";
 const MethodsContent = ({ form, maxAmount, showButton }) => {
-  const handleChange = (panel) => (event, newExpanded) => {
+  const handleChange = (panel, title) => (event, newExpanded) => {
     const newMethod = newExpanded ? panel : false;
     form.change("payment.method", newMethod);
+    form.change("payment.method_title", title);
   };
 
   return (
@@ -34,7 +35,7 @@ const MethodsContent = ({ form, maxAmount, showButton }) => {
               square
               key={item.id}
               expanded={method === item.id}
-              onChange={handleChange(item.id)}
+              onChange={handleChange(item.id, item.title)}
             >
               <AccordionSummary
                 aria-controls={`methode-${item.id}-content`}

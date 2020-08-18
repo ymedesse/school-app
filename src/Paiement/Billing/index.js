@@ -45,24 +45,11 @@ const Checkout = ({ location, history }) => {
     const { payment: paymentInfo } = values;
     const file = isCommande ? COMMANDE : CART;
     const isMomo = paymentInfo.method === "momo";
-    const paymentData = isMomo
+    const payment = isMomo
       ? await submitQosPayment(paymentInfo, () => setSubmiting(false))
-      : {};
+      : paymentInfo;
 
-    if (paymentData) {
-      const { date_paid, serviceref } = { ...paymentData };
-
-      delete paymentData.date_paid;
-      delete paymentData.serviceref;
-      delete paymentData.responsemsg;
-
-      const payment = {
-        ...paymentInfo,
-        date_paid,
-        transaction_id: serviceref,
-        transaction: { ...paymentData },
-      };
-
+    if (payment) {
       const data = {
         ...values,
         type: file,

@@ -104,7 +104,7 @@ const Form = ({ fetcher, url, handlePay, handleCancel, history, ...props }) => {
           </Box>
         </Box>
         <Box textAlign="right">
-          {!isCancelled && leftToPay !== 0 && (
+          {!isCancelled && leftToPay > 0 && (
             <Box textAlign="right">
               <LabelText>Solde dû : </LabelText>
               <TitleTypography color="secondary" className={classes.inline}>
@@ -133,7 +133,7 @@ const Form = ({ fetcher, url, handlePay, handleCancel, history, ...props }) => {
               />
             )}
 
-            {!isCancelled && leftToPay !== 0 && (
+            {!isCancelled && leftToPay > 0 && (
               <IconButtonMedia
                 icon={<CreditCardIcon />}
                 textButtonProps={{ label: "Payer" }}
@@ -158,7 +158,6 @@ const Form = ({ fetcher, url, handlePay, handleCancel, history, ...props }) => {
       paymentCount: payment.legnth,
       paymentsCount,
     };
-    
 
     return (
       <SuspensePaper>

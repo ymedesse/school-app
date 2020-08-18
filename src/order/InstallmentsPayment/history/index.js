@@ -36,6 +36,7 @@ const History = ({
           fetcher={fetcher}
           url={url}
           inAdminMode={inAdminMode}
+          {...props}
         />
       </React.Suspense>
     </>

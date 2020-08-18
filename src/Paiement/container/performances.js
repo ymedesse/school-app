@@ -49,10 +49,20 @@ const authPerformances = (dispatch, auth) => {
     });
   };
 
-  const setShippingRange = (value) => {
-    if (value) {
-      dispatch(actions.setShippingRangeAction(value));
+  const setShippingRange = (data, oldShippingPrice) => {
+    if (data) {
+      const { shippingRange } = data;
+      if (
+        shippingRange &&
+        isDifferentShippingRange(shippingRange, oldShippingPrice)
+      ) {
+        dispatch(actions.setShippingRangeAction(shippingRange));
+      }
     }
+  };
+
+  const isDifferentShippingRange = (newVal, oldVal) => {
+    return JSON.stringify(newVal) !== JSON.stringify(oldVal);
   };
 
   const getReadOrderUrl = (id) => {

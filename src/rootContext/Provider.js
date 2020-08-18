@@ -200,6 +200,10 @@ const RootProvider = (props) => {
 
   const { setCartFromUserInfo, cart: oldCart, commande: oldCmd } = initial.cart;
 
+  const {
+    setShippingRange,
+    shippingRange: oldShippingRange,
+  } = initial.checkout;
   const { initialize: initializeSetting } = initial.setting;
 
   const { data } = useSWR(
@@ -220,6 +224,7 @@ const RootProvider = (props) => {
   React.useEffect(() => {
     setUserInfo(data, auth);
     setCartFromUserInfo(data, oldCart, oldCmd);
+    setShippingRange(data, oldShippingRange);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 

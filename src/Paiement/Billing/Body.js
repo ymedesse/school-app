@@ -15,7 +15,7 @@ import {
 import ListSkeleton from "../../components/ListSkeleton";
 import ErrorBoundarySuspense from "../../components/ErrorBoundarySuspense";
 import FormValidator from "../../components/FormValidator";
-// import { Debug } from "mui-rff";
+import { Debug } from "mui-rff";
 import { convertSNumber } from "../../utils";
 import validate from "./validations";
 import compareProps from "../../utils/compareProps";
@@ -132,7 +132,7 @@ const BillingBody = ({
             {showShortView(form)}
           </Grid>
         </Grid>
-        {/* <Debug /> */}
+        <Debug />
       </>
     );
   };

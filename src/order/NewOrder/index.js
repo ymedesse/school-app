@@ -8,6 +8,8 @@ import { PreviousButton } from "../../components/Buttons";
 
 import { SCHOOL_LIST_LINK } from "../../routerLinks";
 import SubHeader from "../../components/PageSubHeader";
+import LbuHomePub from "../../lbu/HomePub";
+
 const Body = React.lazy(() => import("./Body"));
 
 const NewOrder = ({ location, match, history, ...props }) => {
@@ -45,6 +47,7 @@ const NewOrder = ({ location, match, history, ...props }) => {
           getFetcher={getFetcher}
         />
       </ErrorBoundary>
+      <LbuHomePub />
     </>
   );
 };

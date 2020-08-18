@@ -1,17 +1,17 @@
 import React from "react";
 import useSWR from "swr";
-import ShareIcon from "@material-ui/icons/Share";
+// import ShareIcon from "@material-ui/icons/Share";
 import SchoolIcon from "@material-ui/icons/School";
 
-import { useTheme, makeStyles } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { /* useTheme, */ makeStyles } from "@material-ui/core/styles";
+// import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import HomeIcon from "@material-ui/icons/Home";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 
 import ErrorMessage from "../../components/ErrorMessage";
-import { ButtonWithIcon } from "../../components/Buttons";
+// import { ButtonWithIcon } from "../../components/Buttons";
 import ListSkeleton from "../../components/ListSkeleton";
 import { LIST_FOURNITURE_URL } from "../containers/constants";
 
@@ -24,8 +24,8 @@ import { LabelText } from "../../components/LabelValueTypography";
 const Fournitures = ({ schoolSlug, classeSlug, ...props }) => {
   const url = `${LIST_FOURNITURE_URL}${schoolSlug}/${classeSlug}`;
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { data } = useSWR(url, {
     refreshInterval: 50000,
@@ -41,11 +41,11 @@ const Fournitures = ({ schoolSlug, classeSlug, ...props }) => {
         <Box alignSelf="center" flexGrow={1}>
           <Breadcrumbs breads={getBreadcrumbsRoute(school, classe)} />
         </Box>
-        <Box p={0}>
+        {/* <Box p={0}>
           <ButtonWithIcon variant="text" startIcon={<ShareIcon />}>
             {!isMobile && "Partager cette liste"}
           </ButtonWithIcon>
-        </Box>
+        </Box> */}
       </Box>
     );
   };

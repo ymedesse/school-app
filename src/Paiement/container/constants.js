@@ -2,6 +2,7 @@ import { API } from "../../config";
 export const CART = "cart";
 export const COMMANDE = "commande";
 export const SET_NEW_ORDER = "CREATE_NEW_ORDER";
+export const PAYMENT_STATUS_PENDING = "pending";
 
 export const SET_SHIPPING_RANGE = "SET_SHIPPING_RANGE";
 export const READ_CART_URL = `${API}/cart/`;
