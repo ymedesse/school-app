@@ -95,7 +95,7 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
         <Alert severity="info">
           <ValueText>
             Nous vous prions de bien vouloir valider votre commande en payant
-            avec ce qrcode dans notre magasin de vente dans un délai de 24h
+            avec ce qrcode dans notre magasin de vente dans un délai de 24h. Merci!
           </ValueText>
         </Alert>
         <Paper className={classes.qrCode} square variant="outlined">
@@ -105,7 +105,8 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
           * Vous pouvez revoir ce code dans
           <Link
             color="primary"
-            onClick={() => handleInstallmentlick(payment[0])}
+            component="button"
+            onClick={handleInstallmentlick(payment[0])}
           >
             {` votre historique de paiement`}
           </Link>
@@ -121,7 +122,7 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
   return !error ? (
     <>
       <Grid direction={isMobile ? "column-reverse" : "row"} container>
-        <Grid item sm={6} xs={12}>
+        <Grid item sm={7} xs={12}>
           <div className={classes.margin} />
           {displayInfo()}
           <div className={classes.margin} />
@@ -129,7 +130,7 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
           <div className={classes.margin} />
           {diplayShipping()}
         </Grid>
-        <Grid item sm={6} xs={12}>
+        <Grid item sm={5} xs={12}>
           <div className={classes.margin} />
           {isLocalPayment() && showQrCodeBody()}
         </Grid>

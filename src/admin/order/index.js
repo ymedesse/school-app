@@ -1,7 +1,7 @@
 import React from "react";
 // import { getProductsApi } from "./container/api";
 import Paper from "@material-ui/core/Paper";
-import Products from "./components/Orders";
+import Orders from "./components/Orders";
 
 const Order = ({
   setCurrentViewTitle,
@@ -15,7 +15,7 @@ const Order = ({
 }) => {
   return (
     <Paper>
-      <Products
+      <Orders
         setCurrentViewTitle={setCurrentViewTitle}
         setCurrentViewAction={setCurrentViewAction}
         addNextComponent={addNextComponent}

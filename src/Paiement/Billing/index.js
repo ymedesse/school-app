@@ -24,7 +24,14 @@ const Checkout = ({ location, history }) => {
   const pathName = location.pathname;
   const isCommande = pathName === COMMANDE_PAYMENT_LINK;
   const rootContext = React.useContext(context);
-  const [submiting, setSubmiting] = React.useState(false);
+  const [state, setState] = React.useState({
+    submiting: false,
+    isMomo: false,
+  });
+
+  const { submiting, isMomo } = state;
+  const setSubmiting = (val) =>
+    setState((state) => ({ ...state, submiting: val }));
 
   const submitQosPayment = useQos({ setSubmiting });
 
@@ -41,10 +48,12 @@ const Checkout = ({ location, history }) => {
   const classes = useStyles();
 
   const handleSubmitOrder = async (values) => {
-    setSubmiting(true);
     const { payment: paymentInfo } = values;
     const file = isCommande ? COMMANDE : CART;
     const isMomo = paymentInfo.method === "momo";
+
+    setState((state) => ({ ...state, submiting: true, isMomo }));
+
     const payment = isMomo
       ? await submitQosPayment(paymentInfo, () => setSubmiting(false))
       : paymentInfo;
@@ -62,7 +71,7 @@ const Checkout = ({ location, history }) => {
           error && performErrorAlert(error);
           if (!error) {
             setSubmiting(false);
-            history.push(NEW_ORDER_LINK + "/" + resultat._id);
+            history.push(NEW_ORDER_LINK + "/" + resultat.id);
             // setSuccess("Paiement éffectué avec succès !");
           }
         }
@@ -91,10 +100,12 @@ const Checkout = ({ location, history }) => {
       {showCheckout()}
       <Backdrop className={classes.backdrop} open={submiting}>
         <CircularProgress color="inherit" />
-        <div style={{ fontSize: "1.2rem" }}>
-          Si vous ne recevez pas une demande de validation automatiquement,
-          veuillez vérifier les validations en attente,
-        </div>
+        {isMomo && (
+          <div style={{ fontSize: "1.2rem" }}>
+            Si vous ne recevez pas une demande de validation automatiquement,
+            veuillez vérifier les validations en attente,
+          </div>
+        )}
       </Backdrop>
     </>
   );
