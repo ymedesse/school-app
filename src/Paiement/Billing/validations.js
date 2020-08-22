@@ -14,7 +14,7 @@ export default (file) => (values) => {
 
 const checkPayment = (values, file) => {
   const errors = {};
-  const { payment, cart } = values;
+  const { payment = {}, cart = {} } = values;
   let { amount, method } = payment;
   const isMomo = method === "momo";
   const isLocalPaiement = method === LOCAL_PAYMENT_WAY;

@@ -1,10 +1,11 @@
 import React from "react";
 import ClasseList from "./components/List";
-import ListSkeleton from "../../components/ListSkeleton";
 import { useHistory } from "react-router-dom";
 import { LIST_CLASSE_BY_SCHOOL_SLUG_URL } from "../containers/constants";
 import { ButtonPreviews } from "../../components/Buttons";
 import { SCHOOL_LIST_LINK } from "../../routerLinks";
+import LinearProgress from "@material-ui/core/LinearProgress";
+
 const Schools = ({ schoolSlug, ...props }) => {
   const url = LIST_CLASSE_BY_SCHOOL_SLUG_URL + schoolSlug;
 
@@ -24,7 +25,7 @@ const Schools = ({ schoolSlug, ...props }) => {
 
       <div style={{ marginTop: "16px" }}></div>
 
-      <React.Suspense fallback={<ListSkeleton count="3" height={50} />}>
+      <React.Suspense fallback={<LinearProgress />}>
         <ClasseList url={url} />
       </React.Suspense>
     </>

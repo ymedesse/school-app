@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { TitleTypography } from "../../components/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSkeleton from "../../components/ListSkeleton";
+import SwrRender from "../../components/SwrRender";
 import { ORDERS_LINK } from "../../routerLinks";
 import compareProps from "../../utils/compareProps";
 import { INSTALLMENT_PAYMENT_LINK } from "../../routerLinks";
@@ -92,15 +93,9 @@ const OrderList = ({ fetcher, url, ...restProps }) => {
   const count = error ? 0 : data.length;
 
   return (
-    <>
-      {!error ? (
-        <>
-          <div className={classes.list}>{showList()}</div>
-        </>
-      ) : (
-        <TitleTypography color="secondary">...</TitleTypography>
-      )}
-    </>
+    <SwrRender data={sourceData}>
+      {() => <div className={classes.list}>{showList()}</div>}
+    </SwrRender>
   );
 };
 

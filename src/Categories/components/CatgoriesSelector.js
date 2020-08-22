@@ -1,5 +1,6 @@
 import React from "react";
 import MultipleSelector from "../../components/MultipleSelector";
+
 import useSWR from "swr";
 
 import { LIST_SLUGS } from "../containers/constants";
@@ -23,7 +24,7 @@ const CategorieSelector = ({
   if (error) {
     console.log({ error });
   }
-  
+
   return (
     <>
       <MultipleSelector

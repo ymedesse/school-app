@@ -16,13 +16,13 @@ import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import OrderContent from "../fournitureList";
 import { ORDERS_LINK, INSTALLMENT_HISTORY_LINK } from "../../../routerLinks";
 import { getStatusColor } from "../../container/utils";
-import ErrorMessage from "../../../components/ErrorMessage";
 import ListSkeleton from "../../../components/ListSkeleton";
 import { PreviousButton } from "../../../components/Buttons";
 import { infoConfig, shippingConfig } from "./fieldsConfig.js";
 import IconButtonMedia from "../../../components/IconButtonMedia";
 import useDataDisplayer from "../../../components/hook/useDataFieldsDisplayer";
 import ErrorBoundarySuspense from "../../../components/ErrorBoundarySuspense";
+import SwrRender from "../../../components/SwrRender";
 
 import {
   TitleTypography,
@@ -38,6 +38,7 @@ const Form = ({ fetcher, url, handlePay, handleCancel, history, ...props }) => {
     refreshWhenOffline: false,
     suspense: true,
   });
+  // console.log({ data });
   const error = !data ? true : data && data.error ? true : false;
 
   const { displayFields } = useDataDisplayer(data);
@@ -208,36 +209,38 @@ const Form = ({ fetcher, url, handlePay, handleCancel, history, ...props }) => {
     );
   };
 
-  return !error ? (
-    <Grid
-      container
-      spacing={1}
-      direction="row"
-      alignItems="flex-start"
-      className={classes.root}
-    >
-      <CssBaseline />
-      <PreviousButton
-        color="primary"
-        variant="text"
-        onClick={() => history.push(ORDERS_LINK)}
-      >
-        Commandes
-      </PreviousButton>
-      {showTitle()}
-      <div className={classes.margin} />
-      <Grid container item sm={6} xs={12}>
-        {showInfo()}
-      </Grid>
-      <Grid container item sm={6} xs={12}>
-        {showShipping()}
-      </Grid>
-      <Grid container item xs={12}>
-        {showProduct()}
-      </Grid>
-    </Grid>
-  ) : (
-    <ErrorMessage />
+  return (
+    <SwrRender data={data}>
+      {() => (
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          alignItems="flex-start"
+          className={classes.root}
+        >
+          <CssBaseline />
+          <PreviousButton
+            color="primary"
+            variant="text"
+            onClick={() => history.push(ORDERS_LINK)}
+          >
+            Commandes
+          </PreviousButton>
+          {showTitle()}
+          <div className={classes.margin} />
+          <Grid container item sm={6} xs={12}>
+            {showInfo()}
+          </Grid>
+          <Grid container item sm={6} xs={12}>
+            {showShipping()}
+          </Grid>
+          <Grid container item xs={12}>
+            {showProduct()}
+          </Grid>
+        </Grid>
+      )}
+    </SwrRender>
   );
 };
 

@@ -232,6 +232,12 @@ const Routes = () => {
                         />
 
                         <AdminRoute
+                          path={adminRouteLink.ADMIN_ORDER_PAYMENT_QRCODE_LINK}
+                          exact
+                          component={AdminDashboard}
+                        />
+
+                        <AdminRoute
                           path={adminRouteLink.ADMIN_MANAGE_USER_LINK}
                           exact
                           component={AdminDashboard}

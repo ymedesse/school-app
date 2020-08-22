@@ -1,15 +1,14 @@
 import React from "react";
 import ListeFourniture from "./Fourniture";
-import ListSkeleton from "../../components/ListSkeleton";
+
+import LinearProgress from "@material-ui/core/LinearProgress";
 const Fourniture = ({ ...props }) => {
   const { params } = props.match;
   const { school, classe } = params;
 
   return (
     <>
-      <React.Suspense
-        fallback={<ListSkeleton count={5} height={50} margin="30px" />}
-      >
+      <React.Suspense fallback={<LinearProgress />}>
         <ListeFourniture schoolSlug={school} classeSlug={classe} />
       </React.Suspense>
     </>

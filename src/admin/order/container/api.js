@@ -1,16 +1,16 @@
 import { API /*, wooApi as wooCommerceApi*/ } from "../../../config";
 import { LOCAL_STATUS } from "./constants";
 // const wooApi = wooCommerceApi();
-export const createApi = async (userId, token, data) => {
+
+export const checkQrCodeApi = async (userId, token, code) => {
   try {
-    const response = await fetch(`${API}/product/create/${userId}`, {
-      method: "POST",
+    const response = await fetch(`${API}/qrcode/${code}/${userId}`, {
+      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(data),
     });
     return response.json();
   } catch (err) {
@@ -59,17 +59,26 @@ export const updateLocalStatusApi = async (userId, token, id, status) => {
   return updateStatusFactory(userId, token, id, status, "local-");
 };
 
-export const removeApi = async (userId, token, ids) => {
+export const submitQrPaymentApi = async (
+  userId,
+  token,
+  qrcodeId,
+  orderId,
+  data
+) => {
   try {
-    const response = await fetch(`${API}/products/${userId}`, {
-      method: "DELETE",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ ids }),
-    });
+    const response = await fetch(
+      `${API}/payment-by-qrcode/${qrcodeId}/${orderId}/${userId}`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
     return response.json();
   } catch (err) {
     console.log(err);

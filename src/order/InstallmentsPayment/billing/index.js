@@ -1,6 +1,4 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Backdrop from "@material-ui/core/Backdrop";
 import { makeStyles } from "@material-ui/core/styles";
 
 import useQos from "../../../Paiement/Billing/useQos";
@@ -13,7 +11,7 @@ import {
   INSTALLMENT_PAYMENT_WITH_PARAMS_LINK,
   INSTALLMENT_HISTORY_LINK,
 } from "../../../routerLinks";
-
+import SubmitBackDrop from "../../../Paiement/components/SubmitBackDrop";
 const BillingBody = React.lazy(() => import("./Body"));
 const InstallmentPayement = ({ match, history, location }) => {
   const id = match.params.orderId;
@@ -50,7 +48,6 @@ const InstallmentPayement = ({ match, history, location }) => {
     const payment = isMomo
       ? await submitQosPayment(paymentInfo, () => setSubmiting(false))
       : paymentInfo;
-    console.log({ payment });
 
     if (payment) {
       const data = {
@@ -58,7 +55,6 @@ const InstallmentPayement = ({ match, history, location }) => {
         payment,
       };
 
-      console.log({ data });
       submitInstallmentPayment(id, data, (resultat) => {
         if (resultat) {
           const { error } = resultat;
@@ -95,19 +91,11 @@ const InstallmentPayement = ({ match, history, location }) => {
 
       {showCheckout()}
 
-      <Backdrop
-        className={classes.backdrop}
-        open={submiting}
-        // onClick={() => setSubmiting(false)}
-      >
-        <CircularProgress color="inherit" />
-        {isMomo && (
-          <div style={{ fontSize: "1rem" }}>
-            Si vous ne recevez pas une demande de validation automatiquement,
-            veuillez vérifier les validations en attente,
-          </div>
-        )}
-      </Backdrop>
+      <SubmitBackDrop
+        submiting={submiting}
+        setSubmiting={setSubmiting}
+        isMomo={isMomo}
+      />
     </>
   );
 };
@@ -115,10 +103,6 @@ const InstallmentPayement = ({ match, history, location }) => {
 export default InstallmentPayement;
 
 const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-  },
   body: {
     maxWidth: "800px",
     margin: "auto",

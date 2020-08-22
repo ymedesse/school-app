@@ -39,6 +39,7 @@ export const ADMIN_STOCKAGE_HISTORIY_LINK = "/admin/stockage/fiche-de-stock";
 export const ADMIN_STOCKAGE_ALERTE_LINK = "/admin/stockage/alerte-stock";
 
 export const ADMIN_ORDER_CURRENT_LINK = "/admin/commandes-en-cours";
+export const ADMIN_ORDER_PAYMENT_QRCODE_LINK = "/admin/paiement-qrcode";
 export const ADMIN_ORDER_SHIPPED_LINK = "/admin/commande-livree";
 export const ADMIN_CUSTOMERS_LINK = "/admin/clients";
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import useSWR, { trigger } from "swr";
-import ErrorBoundary from "../../components/ErrorBoundary";
 import Grid from "@material-ui/core/Grid";
 import { CART } from "../containers/constants";
 import ListSkeleton from "../../components/ListSkeleton";
+import SwrRender from "../../components/SwrRender";
 import Facturation from "../../Paiement/Billing/Facturation";
 import compareProps from "../../utils/compareProps";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -34,9 +34,7 @@ const Panier = ({
     trigger(url);
   };
 
-  const error = !resultat ? true : resultat && resultat.error;
   const [state, setState] = useState({
-    values: {},
     fieldError: false,
     submiting: false,
   });
@@ -134,8 +132,8 @@ const Panier = ({
     <Grid container spacing={2}>
       <Grid item xs={12} sm={9}>
         {submiting && <LinearProgress />}
-        {!error ? (
-          <ErrorBoundary>
+        <SwrRender data={values}>
+          {() => (
             <React.Suspense
               fallback={<ListSkeleton count={5} height={50} margin="20px" />}
             >
@@ -149,10 +147,8 @@ const Panier = ({
                 fieldError={fieldError}
               />
             </React.Suspense>
-          </ErrorBoundary>
-        ) : (
-          <LinearProgress />
-        )}
+          )}
+        </SwrRender>
       </Grid>
 
       <Grid xs={12} sm={3} item>

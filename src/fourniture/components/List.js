@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { TitleTypography, LargeTypography } from "../../components/Typography";
+import { TitleTypography } from "../../components/Typography";
 import { useHistory } from "react-router-dom";
 
 import { useTheme, makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,8 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { List, WindowScroller, AutoSizer } from "react-virtualized";
 import Paper from "@material-ui/core/Paper";
 import Suspenser from "../../components/Suspenser";
+import SwrRender from "../../components/SwrRender";
+
 import useSWR from "swr";
 import { CLASSES_LINK } from "../../routerLinks";
 
@@ -51,51 +53,49 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
   const error = !data ? true : data && data.error;
   const count = !error ? data.count : 0;
 
-  return !error ? (
-    <Paper className={classes.paper}>
-      {/* <div className={classes.list}> */}
-      {/* <CssBaseline /> */}
-      {count > 0 ? (
-        <>
-          <WindowScroller
-            style={{
-              ":focus": {
-                border: "10px solid",
-              },
-            }}
-          >
-            {({ height, isScrolling, registerChild, scrollTop }) => (
-              <AutoSizer disableHeight={true}>
-                {({ width }) => (
-                  <div ref={registerChild}>
-                    <List
-                      autoHeight
-                      isScrolling={isScrolling}
-                      scrollTop={scrollTop}
-                      ref={listRef}
-                      height={height}
-                      rowCount={count}
-                      width={width}
-                      rowHeight={100}
-                      rowRenderer={rowRenderer}
-                    />
-                  </div>
+  return (
+    <SwrRender>
+      {() => (
+        <Paper className={classes.paper}>
+          {count > 0 ? (
+            <>
+              <WindowScroller
+                style={{
+                  ":focus": {
+                    border: "10px solid",
+                  },
+                }}
+              >
+                {({ height, isScrolling, registerChild, scrollTop }) => (
+                  <AutoSizer disableHeight={true}>
+                    {({ width }) => (
+                      <div ref={registerChild}>
+                        <List
+                          autoHeight
+                          isScrolling={isScrolling}
+                          scrollTop={scrollTop}
+                          ref={listRef}
+                          height={height}
+                          rowCount={count}
+                          width={width}
+                          rowHeight={100}
+                          rowRenderer={rowRenderer}
+                        />
+                      </div>
+                    )}
+                  </AutoSizer>
                 )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-        </>
-      ) : (
-        <TitleTypography style={{ padding: "5px 15px" }}>
-          Vous ne trouvez pas votre école
-        </TitleTypography>
+              </WindowScroller>
+            </>
+          ) : (
+            <TitleTypography style={{ padding: "5px 15px" }}>
+              Vous ne trouvez pas votre école
+            </TitleTypography>
+          )}
+          {/* </div> */}
+        </Paper>
       )}
-      {/* </div> */}
-    </Paper>
-  ) : (
-    <div>
-      <LargeTypography>Une erreur s'est produite. </LargeTypography>
-    </div>
+    </SwrRender>
   );
 };
 

@@ -9,6 +9,8 @@ import ReactDOMServer from "react-dom/server";
 import { dateToText } from "../../utils";
 import { LargeTypography } from "../../components/Typography";
 import OrderContent from "../components/fournitureList";
+import SwrRender from "../../components/SwrRender";
+
 const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState(initOrder);
@@ -68,8 +70,6 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
     return htmlString;
   };
 
-  const error = !order ? true : order && order.error ? true : false;
-
   const showBody = () => {
     return (
       <>
@@ -103,14 +103,16 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
     );
   };
 
-  return !error ? (
-    <>
-      <button onClick={getHtml}> generate</button>
-      {showBody()}
-      {getHtml()}
-    </>
-  ) : (
-    <></>
+  return (
+    <SwrRender data={result}>
+      {() => (
+        <>
+          <button onClick={getHtml}> generate</button>
+          {showBody()}
+          {getHtml()}
+        </>
+      )}
+    </SwrRender>
   );
 };
 

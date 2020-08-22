@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import context from "../rootContext/context";
-import ListSkeleton from "../components/ListSkeleton";
+import LineProgressBuffer from "../components/LineProgressBuffer";
 import { SCHOOL_LIST_LINK } from "../routerLinks";
 import SubHeader from "../components/PageSubHeader";
 
@@ -42,9 +42,7 @@ const Cart = ({ location }) => {
   };
 
   const showCart = (file = CART) => (
-    <React.Suspense
-      fallback={<ListSkeleton count={5} height={50} margin="30px" />}
-    >
+    <React.Suspense fallback={<LineProgressBuffer />}>
       <Panier
         file={file}
         {...props}

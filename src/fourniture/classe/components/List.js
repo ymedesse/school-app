@@ -10,23 +10,23 @@ import { useTheme, makeStyles } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
-import ErrorMessage from "../../../components/ErrorMessage";
 import useSWR from "swr";
 import { LIST_FOURNITURE_LINK } from "../../../routerLinks";
+import SwrRender from "../../../components/SwrRender";
 
 const FournituresRow = lazy(() => import("./Row"));
-
 const ClasseList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
   const classes = useStyles();
   const history = useHistory();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
-  const { data } = useSWR(url, {
+  const { data, error } = useSWR(url, {
     refreshInterval: 10000,
     revalidateOnFocus: true,
   });
 
+  console.log({ error });
   const handleClick = (item) => {
     const { school, classe } = item;
     history.push(LIST_FOURNITURE_LINK + "/" + school.slug + "/" + classe.slug);
@@ -47,9 +47,6 @@ const ClasseList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
     );
   }
 
-  const error = !data ? true : data && data.error;
-  const count = !error ? data.length : 0;
-
   const getHeader = () => {
     const item = data[0];
     return (
@@ -61,26 +58,29 @@ const ClasseList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
     );
   };
 
-  return !error ? (
-    <Paper square variant="outlined" className={classes.paper}>
-      {count > 0 ? (
-        <>
-          {getHeader()}
-          <TitleTypography style={{ marginLeft: "8px", fontWeight: "300" }}>
-            Sélectionnez une classe
-          </TitleTypography>
-          <List className={classes.root}>
-            {data.map((item, index) => rowRenderer(item, index))}
-          </List>
-        </>
-      ) : (
-        <TitleTypography style={{ padding: "5px 15px" }}>
-          Aucune liste de fourniture n'est encore disponible pour cette école
-        </TitleTypography>
+  return (
+    <SwrRender data={data}>
+      {() => (
+        <Paper square variant="outlined" className={classes.paper}>
+          {data.length > 0 ? (
+            <>
+              {getHeader()}
+              <TitleTypography style={{ marginLeft: "8px", fontWeight: "300" }}>
+                Sélectionnez une classe
+              </TitleTypography>
+              <List className={classes.root}>
+                {data.map((item, index) => rowRenderer(item, index))}
+              </List>
+            </>
+          ) : (
+            <TitleTypography style={{ padding: "5px 15px" }}>
+              Aucune liste de fourniture n'est encore disponible pour cette
+              école
+            </TitleTypography>
+          )}
+        </Paper>
       )}
-    </Paper>
-  ) : (
-    <ErrorMessage />
+    </SwrRender>
   );
 };
 

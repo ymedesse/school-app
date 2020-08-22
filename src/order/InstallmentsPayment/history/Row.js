@@ -67,7 +67,11 @@ const MobileRow = ({ value = {}, isLocalPayment, openQrCode }) => {
               </ValueText>
 
               {isLocalPayment && (
-                <ButtonWithIcon onClick={openQrCode} endIcon={<CropFreeIcon />}>
+                <ButtonWithIcon
+                  variant="text"
+                  onClick={openQrCode}
+                  startIcon={<CropFreeIcon />}
+                >
                   qrcode
                 </ButtonWithIcon>
               )}

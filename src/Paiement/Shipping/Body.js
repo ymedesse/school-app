@@ -7,6 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import useSWR from "swr";
 import validate from "./validations";
+import SwrRender from "../../components/SwrRender";
 import { TitleTypography } from "../../components/Typography";
 import FormValidator from "../../components/FormValidator";
 import ListSkeleton from "../../components/ListSkeleton";
@@ -199,15 +200,17 @@ const Shipping = ({
   );
 
   return (
-    <>
-      <FormValidator
-        onSubmit={onSubmit}
-        initialValues={state}
-        subscription={{ pristine: true, submitting: true }}
-        contents={contents}
-        validate={validate}
-      />
-    </>
+    <SwrRender data={result}>
+      {() => (
+        <FormValidator
+          onSubmit={onSubmit}
+          initialValues={state}
+          subscription={{ pristine: true, submitting: true }}
+          contents={contents}
+          validate={validate}
+        />
+      )}
+    </SwrRender>
   );
 };
 

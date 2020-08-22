@@ -24,7 +24,7 @@ const Dashboard = ({ width, height, ...restProps }) => {
     previous,
   } = adminContext.layout;
 
-  const { setSuccess, setError } = adminContext.alert;
+  const alertState = adminContext.alert;
   const { isAuthenticatedUser } = adminContext.auth;
 
   const [componentState, setComponentState] = useState({});
@@ -57,7 +57,7 @@ const Dashboard = ({ width, height, ...restProps }) => {
     width,
     height,
     isAuthenticatedUser,
-    alertState: { setSuccess, setError },
+    alertState,
     importComponentNativeState, // permet de sauvegarder le state de l'entrer du menu
     ...componentState, // permet de partager le state relatif au init du content en cours à tous ses enfants
   };

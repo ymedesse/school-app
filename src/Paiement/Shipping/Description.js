@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { LabelText, ValueText } from "../../components/LabelValueTypography";
 
 const ShippingText = ({ shipping }) => {
-  const { method_title = "", total = 0, address = {} } = shipping;
+  const { method_title = "", total = 0, address = {} } = shipping || {};
 
   const {
     firstName,

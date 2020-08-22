@@ -1,5 +1,4 @@
 import React, { useContext, Suspense } from "react";
-import useSWR from "swr";
 import { makeStyles } from "@material-ui/core/styles";
 import RootContext from "../rootContext/context";
 

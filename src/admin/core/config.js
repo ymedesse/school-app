@@ -6,6 +6,8 @@ import * as productAccess from "../Product/container/accesses";
 import OrderDashboard from "../order";
 import * as orderAccess from "../order/container/accesses";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import CropFreeIcon from "@material-ui/icons/CropFree";
+import QrCodePayment from "../order/payments";
 
 import Manager from "../manager";
 import Action from "../manager/Action";
@@ -66,8 +68,20 @@ export const generalItems = [
     action: <></>,
     access: orderAccess.ORDER_MENU,
     isAllowed: (user) => checkPermission(user, orderAccess.ORDER_MENU),
+    child: [
+      {
+        id: "qrCodepayment",
+        title: "Paiement par qrcodes ",
+        path: routeLink.ADMIN_ORDER_PAYMENT_QRCODE_LINK,
+        itemIcon: <CropFreeIcon />,
+        content: (props) => <QrCodePayment {...props} />,
+        action: <></>,
+        access: orderAccess.ACTION_DO_PAYMENT_BY_QRCODE,
+        isAllowed: (user) =>
+          checkPermission(user, orderAccess.ACTION_DO_PAYMENT_BY_QRCODE),
+      },
+    ],
   },
-
   {
     id: "school",
     title: "Ecoles",

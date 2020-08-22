@@ -7,6 +7,7 @@ import * as links from "../routerLinks";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { Notifications } from "../components/ShowApiNotification";
+import SwrRender from "../components/SwrRender";
 import Paper from "@material-ui/core/Paper";
 import CartEmpty from "../cart/components/CartEmpty";
 import Facturation from "./components/Facturation";
@@ -44,8 +45,6 @@ const Process = ({ location }) => {
     revalidateOnFocus: true,
     suspense: true,
   });
-
-  const error = !fullCart ? true : fullCart && fullCart.error;
 
   // Global steppers config
 
@@ -302,8 +301,7 @@ const Process = ({ location }) => {
           setLayout({ ...layout, error: false });
         }}
       />
-
-      {!error && render()}
+      <SwrRender data={fullCart}>{() => render()}</SwrRender>
     </div>
   );
 };

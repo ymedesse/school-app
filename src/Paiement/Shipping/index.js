@@ -1,5 +1,4 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import context from "../../rootContext/context";
 import {
   COMMANDE_SHIPPING_LINK,
@@ -9,6 +8,7 @@ import {
   SCHOOL_LIST_LINK,
 } from "../../routerLinks";
 import SubHeader from "../../components/PageSubHeader";
+import LineProgressBuffer from "../../components/LineProgressBuffer";
 import ErrorBoundary from "../../components/ErrorBoundary";
 
 const ShippingContent = React.lazy(() => import("./Body"));
@@ -45,7 +45,7 @@ const Shipping = ({ location }) => {
 
   const showShipping = () => (
     <ErrorBoundary>
-      <React.Suspense fallback={<CircularProgress />}>
+      <React.Suspense fallback={<LineProgressBuffer />}>
         <ShippingContent
           {...props}
           minCost={minCost}

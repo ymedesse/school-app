@@ -4,11 +4,13 @@ import { TitleTypography } from "../../../components/Typography";
 import { List, AutoSizer } from "react-virtualized";
 import { makeStyles } from "@material-ui/core/styles";
 import { ButtonSimple } from "../../../components/Buttons";
-import CheckBoxSkeleton from "../../../components/CheckBoxSkeleton";
 import SpeedialButton from "../../../components/SpeedialButton";
 import useSWR, { trigger } from "swr";
 import AddIcon from "@material-ui/icons/Add";
 import ListSkeleton from "../../../components/ListSkeleton";
+import LazyLoad from "../../../components/LazyLoad";
+import compareProps from "../../../utils/compareProps";
+
 import { CREATE_ACTION, UPDATE_ACTION } from "../containers/accesses";
 const BodyDialog = React.lazy(() => import("./content/BodyDialog"));
 const SchoolClasses = React.lazy(() => import("./Body"));
@@ -122,7 +124,7 @@ const SchoolList = ({
 
     const id = item ? item[idField] : undefined;
     const content = id && (
-      <React.Suspense fallback={<CheckBoxSkeleton count={1} />}>
+      <LazyLoad>
         <SchoolRow
           handleToggle={handleToggle}
           handleDelete={() => oneRemoveOne(id)}
@@ -136,7 +138,7 @@ const SchoolList = ({
           multiSelector={multiSelector}
           selector={selector}
         />
-      </React.Suspense>
+      </LazyLoad>
     );
 
     return (
@@ -289,12 +291,7 @@ const SchoolList = ({
 };
 
 const isEqual = (prev, next) => {
-  return (
-    JSON.stringify({
-      accesses: prev !== null ? prev.accesses : "",
-      selected: prev !== null ? prev.selected : [],
-    }) === JSON.stringify({ accesses: next.accesses, delected: next.selected })
-  );
+  return compareProps(prev, next, ["accesses", "selected"]);
 };
 
 export default React.memo(SchoolList, isEqual);

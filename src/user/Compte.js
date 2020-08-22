@@ -55,6 +55,7 @@ const Compte = ({ profile, user, updateUser, url, fetcher }) => {
   );
 
   const handleInitLayout = (val) => setState((state) => ({ ...state, ...val }));
+  
   return (
     <div>
       <Notifications

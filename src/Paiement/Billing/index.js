@@ -1,7 +1,4 @@
 import React from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Backdrop from "@material-ui/core/Backdrop";
-import { makeStyles } from "@material-ui/core/styles";
 import useQos from "./useQos";
 import context from "../../rootContext/context";
 
@@ -14,9 +11,10 @@ import {
   COMMANDE_PAYMENT_LINK,
   NEW_ORDER_LINK,
 } from "../../routerLinks";
+import SubmitBackDrop from "../components/SubmitBackDrop";
 import SubHeader from "../../components/PageSubHeader";
 import ErrorBoundary from "../../components/ErrorBoundarySuspense";
-import ListSkeleton from "../../components/ListSkeleton";
+import LineProgressBuffer from "../../components/LineProgressBuffer";
 import { CART, COMMANDE } from "../container/constants";
 
 const BillingBody = React.lazy(() => import("./Body"));
@@ -45,8 +43,6 @@ const Checkout = ({ location, history }) => {
   const { performErrorAlert } = rootContext.alert;
   const { submitOder } = rootContext.checkout;
 
-  const classes = useStyles();
-
   const handleSubmitOrder = async (values) => {
     const { payment: paymentInfo } = values;
     const file = isCommande ? COMMANDE : CART;
@@ -58,6 +54,7 @@ const Checkout = ({ location, history }) => {
       ? await submitQosPayment(paymentInfo, () => setSubmiting(false))
       : paymentInfo;
 
+    console.log({ payment });
     if (payment) {
       const data = {
         ...values,
@@ -80,9 +77,7 @@ const Checkout = ({ location, history }) => {
   };
 
   const showCheckout = (rest) => (
-    <ErrorBoundary
-      fallback={<ListSkeleton count={8} height={48} margin="32px" />}
-    >
+    <ErrorBoundary fallback={<LineProgressBuffer />}>
       <BillingBody
         getFetcher={getFetcher}
         isCommande={isCommande}
@@ -98,27 +93,16 @@ const Checkout = ({ location, history }) => {
       <SubHeader routes={getRoutes(pathName)} title="Paiement" />
 
       {showCheckout()}
-      <Backdrop className={classes.backdrop} open={submiting}>
-        <CircularProgress color="inherit" />
-        {isMomo && (
-          <div style={{ fontSize: "1.2rem" }}>
-            Si vous ne recevez pas une demande de validation automatiquement,
-            veuillez vérifier les validations en attente,
-          </div>
-        )}
-      </Backdrop>
+      <SubmitBackDrop
+        submiting={submiting}
+        setSubmiting={setSubmiting}
+        isMomo={isMomo}
+      />
     </>
   );
 };
 
 export default Checkout;
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-  },
-}));
 
 const getRoutes = (pathName) => {
   return pathName === PAYMENT_LINK

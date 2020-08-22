@@ -1,9 +1,10 @@
-import React, { useEffect, lazy, useState } from "react";
-import { TitleTypography, LargeTypography } from "../../components/Typography";
+import React, { lazy } from "react";
+import { TitleTypography } from "../../components/Typography";
 import { List, WindowScroller } from "react-virtualized";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Suspenser from "../../components/Suspenser";
+import SwrRender from "../../../components/SwrRender";
 import useSWR from "swr";
 const SchoolRow = lazy(() => import("./Row"));
 
@@ -35,43 +36,43 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
   const error = !data ? true : data && data.error;
   const count = !error ? data.count : 0;
 
-  return !error ? (
-    <Paper className={classes.paper}>
-      {/* <div className={classes.list}> */}
-      {/* <CssBaseline /> */}
-      {count > 0 ? (
-        <>
-          <WindowScroller>
-            {({ height, isScrolling, registerChild, scrollTop, width }) => (
-              <div>
-                <div ref={registerChild}>
-                  <List
-                    autoHeight
-                    isScrolling={isScrolling}
-                    scrollTop={scrollTop}
-                    ref={listRef}
-                    height={height}
-                    rowCount={count}
-                    width={"100%"}
-                    rowHeight={100}
-                    rowRenderer={rowRenderer}
-                  />
-                </div>
-              </div>
-            )}
-          </WindowScroller>
-        </>
-      ) : (
-        <TitleTypography style={{ padding: "5px 15px" }}>
-          Vous ne trouvez pas votre école
-        </TitleTypography>
+  return (
+    <SwrRender data={data}>
+      {() => (
+        <Paper className={classes.paper}>
+          {/* <div className={classes.list}> */}
+          {/* <CssBaseline /> */}
+          {count > 0 ? (
+            <>
+              <WindowScroller>
+                {({ height, isScrolling, registerChild, scrollTop, width }) => (
+                  <div>
+                    <div ref={registerChild}>
+                      <List
+                        autoHeight
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                        ref={listRef}
+                        height={height}
+                        rowCount={count}
+                        width={"100%"}
+                        rowHeight={100}
+                        rowRenderer={rowRenderer}
+                      />
+                    </div>
+                  </div>
+                )}
+              </WindowScroller>
+            </>
+          ) : (
+            <TitleTypography style={{ padding: "5px 15px" }}>
+              Vous ne trouvez pas votre école
+            </TitleTypography>
+          )}
+          {/* </div> */}
+        </Paper>
       )}
-      {/* </div> */}
-    </Paper>
-  ) : (
-    <div>
-      <LargeTypography>Une erreur s'est produite. </LargeTypography>
-    </div>
+    </SwrRender>
   );
 };
 
@@ -106,6 +107,3 @@ const useStyles = makeStyles((theme) => ({
   suspense: {},
 }));
 
-const pluriel = (count) => {
-  return count > 1 ? "s" : "";
-};

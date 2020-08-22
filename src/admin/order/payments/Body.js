@@ -1,115 +1,93 @@
 import React from "react";
-import useSWR from "swr";
-import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import purple from "@material-ui/core/colors/purple";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import FormValidator from "../../../components/FormValidator";
+import SwrRender from "../../../components/SwrRender";
+import compareProps from "../../../utils/compareProps";
+import validate from "./validations";
+import Content from "./Content";
+import { Debug } from "mui-rff";
 
-import { getStatusColor } from "../../container/utils";
-import ErrorMessage from "../../../components/ErrorMessage";
-import ErrorBoundarySuspense from "../../../components/ErrorBoundarySuspense";
+const Form = ({
+  qrCode,
+  submitQrPayment,
+  performFullErrorAlert,
+  performFullSuccessAlert,
+  setCurrentViewerTitleAndAction,
+  rescane,
+}) => {
+  React.useEffect(() => {
+    setCurrentViewerTitleAndAction("Nouveau Paiement");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-import {
-  TitleTypography,
-  LargeTypography,
-} from "../../../components/Typography";
+  const onSubmit = async (values, form, complete) => {
+    const { qrCodeId, orderId } = values;
+    console.log({ values, qrCodeId, orderId });
+    submitQrPayment &&
+      submitQrPayment(qrCodeId, orderId, values, (data) => {
+        if (data) {
+          const { error } = data;
+          if (error) {
+            performFullErrorAlert &&
+              performFullErrorAlert(data.error, {
+                title: "Payment par QrCode",
+              });
+          }
 
-const Form = ({ fetcher, url, handlePay, handleCancel, history, ...props }) => {
-  const classes = useStyles();
-
-  const { data } = useSWR(url, fetcher, {
-    revalidateOnFocus: false,
-    refreshWhenOffline: false,
-    suspense: true,
-  });
-  const error = !data ? true : data && data.error ? true : false;
-
-  const { id, totalAmount, leftToPay, status, isCancelled = false } = !error
-    ? data
-    : {};
-
-  const showTitle = () => {
-    const color = getStatusColor(status.id);
-    return (
-      <Box display="flex" alignItems="center" width="100%" mb={2}>
-        <Box alignSelf="center" flexGrow={1}>
-          <Box>
-            <LargeTypography className={classes.inline}>
-              {`Commande ${id}`}
-            </LargeTypography>
-            <ValueText style={{ color }}>{status.label}</ValueText>
-          </Box>
-
-          <Box>
-            <TitleTypography className={classes.total}>
-              <strong> {totalAmount} </strong> Fcfa
-            </TitleTypography>
-          </Box>
-        </Box>
-        <Box textAlign="right">
-          {!isCancelled && leftToPay > 0 && (
-            <Box textAlign="right">
-              <LabelText>Solde dû : </LabelText>
-              <TitleTypography color="secondary" className={classes.inline}>
-                <strong> {` ${leftToPay || ""}`} </strong> Fcfa
-              </TitleTypography>
-            </Box>
-          )}
-        </Box>
-      </Box>
-    );
+          if (!error) {
+            performFullSuccessAlert("Paiement effectué avec succès");
+            rescane();
+          }
+        }
+      });
   };
 
-  return !error ? (
-    <Grid
-      container
-      spacing={1}
-      direction="row"
-      alignItems="flex-start"
-      className={classes.root}
-    >
-      {showTitle()}
-      <div className={classes.margin} />
-    </Grid>
-  ) : (
-    <ErrorMessage />
+  const contents = ({ form, ...props }) => (
+    <>
+      <Content rescane={rescane} data={qrCode} />
+      <Debug />
+    </>
+  );
+
+  return (
+    <SwrRender data={qrCode}>
+      {() => (
+        <FormValidator
+          onSubmit={onSubmit}
+          initialValues={getDefaultData(qrCode)}
+          subscription={{ pristine: true, submitting: true }}
+          contents={contents}
+          validate={validate}
+        />
+      )}
+    </SwrRender>
   );
 };
 
-export default React.memo(Form);
+const isEqual = (prev, next) => {
+  return compareProps(prev, next, ["code"]);
+};
+
+export default React.memo(Form, isEqual);
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    padding: theme.spacing(1),
-  },
-  inline: {
-    display: "inline",
-  },
-  status: {
-    color: "chocolate",
-  },
-  total: {
-    color: purple[500],
-  },
   margin: {
     marginBottom: theme.spacing(1),
   },
 }));
 
-const LabelText = ({ children, ...props }) => {
-  return (
-    <Typography style={{ display: "inline" }} variant="body2" {...props}>
-      {children}
-    </Typography>
-  );
-};
-
-const ValueText = ({ children, ...props }) => {
-  return (
-    <Typography style={{ display: "inline" }} variant="subtitle2" {...props}>
-      {children}
-    </Typography>
-  );
+const getDefaultData = (data) => {
+  const { amount } = data;
+  return {
+    payerData: {
+      lastName: "",
+      firstName: "",
+      phone: "",
+      email: "",
+    },
+    selfPayer: true,
+    amount,
+    qrCodeId: data._id,
+    orderId: data.order.id,
+  };
 };

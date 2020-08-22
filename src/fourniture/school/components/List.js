@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import useSWR from "swr";
 import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
@@ -8,10 +8,10 @@ import { List, WindowScroller, AutoSizer } from "react-virtualized";
 
 import Empty from "./Empty";
 import { CLASSES_LINK } from "../../../routerLinks";
+import SwrRender from "../../../components/SwrRender";
 import LazyLoad from "../../../components/LazyLoad";
-import { LargeTypography } from "../../../components/Typography";
-
-const SchoolRow = lazy(() => import("./Row"));
+import compareProps from "../../../utils/compareProps";
+import SchoolRow from "./Row";
 
 const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
   const classes = useStyles();
@@ -48,54 +48,53 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
       </div>
     );
   }
+  const getCount = () => data.count;
 
-  const error = !data ? true : data && data.error;
-  const count = !error ? data.count : 0;
-
-  return !error ? (
-    <>
-      {count > 0 ? (
-        <Paper square className={classes.paper}>
-          <WindowScroller
-            style={{
-              ":focus": {
-                border: "10px solid",
-              },
-            }}
-          >
-            {({ height, isScrolling, registerChild, scrollTop }) => (
-              <AutoSizer disableHeight={true}>
-                {({ width }) => (
-                  <div ref={registerChild}>
-                    <List
-                      autoHeight
-                      isScrolling={isScrolling}
-                      scrollTop={scrollTop}
-                      ref={listRef}
-                      height={height}
-                      rowCount={count}
-                      width={width}
-                      rowHeight={75}
-                      rowRenderer={rowRenderer}
-                    />
-                  </div>
-                )}
-              </AutoSizer>
-            )}
-          </WindowScroller>
-        </Paper>
-      ) : (
-        <Empty />
-      )}
-    </>
-  ) : (
-    <div>
-      <LargeTypography>Une erreur s'est produite. </LargeTypography>
-    </div>
+  return (
+    <SwrRender data={data}>
+      {() =>
+        getCount() > 0 ? (
+          <Paper square className={classes.paper}>
+            <WindowScroller
+              style={{
+                ":focus": {
+                  border: "10px solid",
+                },
+              }}
+            >
+              {({ height, isScrolling, registerChild, scrollTop }) => (
+                <AutoSizer disableHeight={true}>
+                  {({ width }) => (
+                    <div ref={registerChild}>
+                      <List
+                        autoHeight
+                        isScrolling={isScrolling}
+                        scrollTop={scrollTop}
+                        ref={listRef}
+                        height={height}
+                        rowCount={getCount()}
+                        width={width}
+                        rowHeight={75}
+                        rowRenderer={rowRenderer}
+                      />
+                    </div>
+                  )}
+                </AutoSizer>
+              )}
+            </WindowScroller>
+          </Paper>
+        ) : (
+          <Empty />
+        )
+      }
+    </SwrRender>
   );
 };
 
-export default React.memo(SchoolList);
+const isEqual = (prev, next) => {
+  return compareProps(prev, next, ["url", "schoolId"]);
+};
+export default React.memo(SchoolList, isEqual);
 
 const useStyles = makeStyles((theme) => ({
   list: {

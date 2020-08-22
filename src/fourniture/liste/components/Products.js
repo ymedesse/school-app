@@ -1,12 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import context from "../../../rootContext/context";
 import ProductsList from "./List";
 import SearchField from "../../../components/SearchField";
 import { ButtonSimple } from "../../../components/Buttons";
-import CheckBoxSkeleton from "../../../components/CheckBoxSkeleton";
 import Fuse from "fuse.js";
-import { CART_LINK } from "../../../routerLinks";
+import { CART_LINK, COMMANDE_LINK } from "../../../routerLinks";
 const Products = ({ data, ...props }) => {
   const history = useHistory();
   const { products, classe, school, _id: listeId } = data;
@@ -17,6 +17,7 @@ const Products = ({ data, ...props }) => {
 
   const addItemToCart = (file = "cart") => (product, quantity = 1) => {
     const title = file === "cart" ? "panier" : "liste à commander";
+    console.log({ file, title });
     const { _id, name } = product;
     addToCart(
       _id,
@@ -30,7 +31,7 @@ const Products = ({ data, ...props }) => {
         if (data) {
           const { error } = data;
           performError(error, title);
-          !error && performSuccess({ quantity, name }, title);
+          !error && performSuccess({ quantity, name }, title, file);
         }
       },
       file
@@ -44,23 +45,23 @@ const Products = ({ data, ...props }) => {
       { title: "Ajout au panier" }
     );
 
-  const performSuccess = (product, typeTitle) => {
+  const performSuccess = (product, typeTitle, file) => {
     const { quantity, name } = product;
-
+    const isCart = file === "cart";
     setFullSuccess({
       message: `Votre ${typeTitle} contient ${quantity} quantité(s) de ${name}`,
-      title: `Ajout à votre ${typeTitle}`,
+      title: `Ajout avec succès`,
       action: (handleClose) => (
         <ButtonSimple
           onClick={() => {
             handleClose();
-            history.push(CART_LINK);
+            history.push(isCart ? CART_LINK : COMMANDE_LINK);
           }}
           color="inherit"
           variant="text"
           size="small"
         >
-          Mon panier
+          {isCart ? "Mon panier" : "Ma liste à commander"}
         </ButtonSimple>
       ),
     });
@@ -115,9 +116,7 @@ const Products = ({ data, ...props }) => {
         showLeftToogle={false}
       />
 
-      <React.Suspense
-        fallback={<CheckBoxSkeleton count={5} height={40} margin="24px" />}
-      >
+      <React.Suspense fallback={<LinearProgress />}>
         <ProductsList
           addItemToCart={addItemToCart("cart")}
           addItemToCommande={addItemToCart("commande")}

@@ -10,7 +10,6 @@ const useQosPayment = ({ setSubmiting }) => {
   const defaultErrorAlert = (errorMessage, error) => {
     setSubmiting && setSubmiting(false);
     performErrorAlert(errorMessage);
-    console.log({ error });
   };
 
   const performPaymentPending = async ({ paymentData, paymentInfo }) => {

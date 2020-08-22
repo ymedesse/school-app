@@ -13,6 +13,7 @@ import {
 import compareProps from "../../../utils/compareProps";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import IconButtonMedia from "../../../components/IconButtonMedia";
+import SwrRender from "../../../components/SwrRender";
 import { LabelText, ValueText } from "../../../components/LabelValueTypography";
 import { INSTALLMENT_PAYMENT_LINK } from "../../../routerLinks";
 import DialogQrCode from "../../../Paiement/components/DialogQrCode";
@@ -197,16 +198,14 @@ const OrderList = ({
 
   return (
     <>
-      {!error ? (
-        <div className={classes.list}>
-          {showList()}
-          {showDialog()}
-        </div>
-      ) : (
-        <TitleTypography color="secondary">
-          Une erreur s'est produite
-        </TitleTypography>
-      )}
+      <SwrRender data={sourceData}>
+        {() => (
+          <div className={classes.list}>
+            {showList()}
+            {showDialog()}
+          </div>
+        )}
+      </SwrRender>
     </>
   );
 };

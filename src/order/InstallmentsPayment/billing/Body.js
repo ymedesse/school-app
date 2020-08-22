@@ -1,14 +1,15 @@
 import React from "react";
 import useSWR from "swr";
+
 // import { Debug } from "mui-rff";
 import Box from "@material-ui/core/Box";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 
 import validate from "./validations";
+import SwrRender from "../../../components/SwrRender";
 import compareProps from "../../../utils/compareProps";
 import ListSkeleton from "../../../components/ListSkeleton";
-import ErrorMessage from "../../../components/ErrorMessage";
 import FormValidator from "../../../components/FormValidator";
 import { LargeTypography } from "../../../components/Typography";
 
@@ -109,19 +110,18 @@ const BillingBody = ({ getFetcher, onSubmit, orderInit, getReadUrl, id }) => {
     onSubmit(val);
   };
 
-  const isError = !order ? true : false;
-  return !isError ? (
-    <>
-      <FormValidator
-        onSubmit={handleSubmit}
-        initialValues={state}
-        subscription={{ pristine: true, submitting: true }}
-        contents={contents}
-        validate={validate}
-      />
-    </>
-  ) : (
-    <ErrorMessage />
+  return (
+    <SwrRender data={order}>
+      {() => (
+        <FormValidator
+          onSubmit={handleSubmit}
+          initialValues={state}
+          subscription={{ pristine: true, submitting: true }}
+          contents={contents}
+          validate={validate}
+        />
+      )}
+    </SwrRender>
   );
 };
 

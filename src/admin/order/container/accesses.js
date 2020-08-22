@@ -12,3 +12,4 @@ export const ACTION_VIEW_PORDUCT_ORDERED = "view_product_odered";
 export const ACTION_SUBMIT_PAYMENTS = "submit_payments";
 export const ACTION_VIEW_PAYMENTS_RESUME = "view_payments_resume";
 export const ACTION_VIEW_PAYMENTS_LIST = "view_payments_list";
+export const ACTION_DO_PAYMENT_BY_QRCODE = "view_payments_by_qrCode";

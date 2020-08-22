@@ -4,9 +4,10 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
+
 import useSWR from "swr";
 
-import { useHistory } from "react-router-dom";
 import ErrorBoundarySuspense from "../../components/ErrorBoundarySuspense";
 import useDataDisplayer from "../../components/hook/useDataFieldsDisplayer";
 import useMediaDetector from "../../components/hook/useMediaDetector";
@@ -20,7 +21,6 @@ import { ValueText, LabelText } from "../../components/LabelValueTypography";
 import { INSTALLMENT_HISTORY_LINK } from "../../routerLinks";
 
 const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
-  const history = useHistory();
   const classes = useStyles();
   const [order, setOrder] = React.useState(initOrder);
   const { displayFields } = useDataDisplayer(order);
@@ -82,10 +82,7 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
     );
   };
 
-  const handleInstallmentlick = (payment) => (e) => {
-    history.push(installmentUrl);
-  };
-
+  
   const showQrCodeBody = () => {
     const { payment } = order;
     const { qrCode } = payment[0];
@@ -95,20 +92,19 @@ const Checkout = ({ order: initOrder, id, getReadOrderUrl, getFetcher }) => {
         <Alert severity="info">
           <ValueText>
             Nous vous prions de bien vouloir valider votre commande en payant
-            avec ce qrcode dans notre magasin de vente dans un délai de 24h. Merci!
+            avec ce qrcode dans notre magasin de vente dans un délai de 24h.
+            Merci!
           </ValueText>
         </Alert>
-        <Paper className={classes.qrCode} square variant="outlined">
-          <QrCodeCard qrCode={qrCode} order={order} />
-        </Paper>
+        {qrCode && (
+          <Paper className={classes.qrCode} square variant="outlined">
+            <QrCodeCard qrCode={qrCode} order={order} />
+          </Paper>
+        )}
         <LabelText>
           * Vous pouvez revoir ce code dans
-          <Link
-            color="primary"
-            component="button"
-            onClick={handleInstallmentlick(payment[0])}
-          >
-            {` votre historique de paiement`}
+          <Link component={RouterLink} color="primary" to={installmentUrl}>
+            {`votre historique de paiement`}
           </Link>
         </LabelText>
       </>

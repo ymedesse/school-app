@@ -30,13 +30,19 @@ const adressPerformances = (dispatch) => {
       console.log({ error });
   };
 
-  const performFullErrorAlert = (data, error) => {
+  const performFullErrorAlert = (error, data) => {
     const type = typeof error;
     error && type === "string" && setFullError({ ...data, message: error });
     error &&
       type !== "string" &&
       setFullError({ ...data, message: "une erreur s'est produite" }) &&
       console.log({ error });
+  };
+  const performFullSuccessAlert = (
+    message = "opération effectuée avec succès",
+    data
+  ) => {
+    setFullSuccess({ ...data, message });
   };
 
   return {
@@ -47,6 +53,7 @@ const adressPerformances = (dispatch) => {
     setFullError,
     setFullSuccess,
     performFullErrorAlert,
+    performFullSuccessAlert,
   };
 };
 
