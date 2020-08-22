@@ -1,6 +1,5 @@
 import * as routeLink from "../routerLinks";
 import Intro from "./Intro";
-import Adresses from "../user/layout/Adresses";
 import Compte from "../user";
 import Orders from "../order";
 // import Notifications from "../user/layout/Notifications";
