@@ -42,7 +42,7 @@ const QrScanner = ({ handleNewCode, performFullErrorAlert, checkQrCode }) => {
         onError={handleError}
         onScan={handleScan}
         style={{ width: "80%", margin: "auto", marginBottom: "32px" }}
-        facingMode={"user"}
+        // facingMode={"user"}
         legacyMode={true}
       />
 

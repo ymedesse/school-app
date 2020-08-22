@@ -22,6 +22,7 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import CloseIcon from "@material-ui/icons/Close";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -109,6 +110,19 @@ const SignupForm = ({
           openInDialog && props.closeDialog();
           props.nextStep && props.nextStep();
         }
+      }
+    });
+  };
+
+  const handleExternalSubmit = async (value) => {
+    setValues({ ...values, error: false, loading: true });
+
+    await externalSignin(value, (data) => {
+      const { error } = data;
+      error && setValues({ ...values, error: error, loading: false });
+      if (!error) {
+        openInDialog && props.closeDialog();
+        props.nextStep && props.nextStep();
       }
     });
   };
@@ -241,6 +255,7 @@ const SignupForm = ({
 
       <DialogContent dividers>
         {showError()}
+        <GoogleLoginButton handleExternalSubmit={handleExternalSubmit} />
 
         {SignupForm}
       </DialogContent>

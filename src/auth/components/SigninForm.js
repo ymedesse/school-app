@@ -17,9 +17,9 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { makeStyles } from "@material-ui/core/styles";
 import MailIcon from "@material-ui/icons/Mail";
 import LockIcon from "@material-ui/icons/Lock";
-import Icon from "@material-ui/core/Icon";
+// import Icon from "@material-ui/core/Icon";
 import CustomDialog from "../../components/Dialog";
-// import GoogleLoginButton from "./GoogleLoginButton";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 const SigninForm = ({
   openInDialog,
@@ -74,18 +74,18 @@ const SigninForm = ({
     });
   };
 
-  // const handleExternalSubmit = async (value) => {
-  //   setValues({ ...values, error: false, loading: true });
+  const handleExternalSubmit = async (value) => {
+    setValues({ ...values, error: false, loading: true });
 
-  //   await externalSignin(value, (data) => {
-  //     const { error } = data;
-  //     error && setValues({ ...values, error: error, loading: false });
-  //     if (!error) {
-  //       openInDialog && props.closeDialog();
-  //       props.nextStep && props.nextStep();
-  //     }
-  //   });
-  // };
+    await externalSignin(value, (data) => {
+      const { error } = data;
+      error && setValues({ ...values, error: error, loading: false });
+      if (!error) {
+        openInDialog && props.closeDialog();
+        props.nextStep && props.nextStep();
+      }
+    });
+  };
 
   const showError = () => {
     return error ? (
@@ -118,7 +118,7 @@ const SigninForm = ({
         justify="center"
         alignItems="center"
       >
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           fullWidth
@@ -126,9 +126,9 @@ const SigninForm = ({
         >
           <Icon className={classes.fbk} />
           Continuer avec Facebook
-        </Button>
+        </Button> */}
 
-        {/* <GoogleLoginButton handleExternalSubmit={handleExternalSubmit} /> */}
+        <GoogleLoginButton handleExternalSubmit={handleExternalSubmit} />
 
         <Typography
           style={{ marginTop: "10px", textAlign: "center" }}

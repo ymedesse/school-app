@@ -7,7 +7,7 @@ import googleSvg from "../../assets/google.svg";
 // import { refreshTokenSetup } from "../utils/refreshToken";
 
 const clientId =
-  "293291852258-5gqc781popuraabh8q797q533qvc62tk.apps.googleuserco59ntent.com";
+  "293291852258-5gqc781popuraabh8q797q533qvc62tk.apps.googleusercontent.com";
 
 const GoogleLoginButton = ({ handleExternalSubmit }) => {
   const classes = useStyles();
@@ -23,7 +23,6 @@ const GoogleLoginButton = ({ handleExternalSubmit }) => {
     onFailure,
     clientId,
     isSignedIn: true,
-    cookiePolicy: "h",
     // accessType: "offline",
     // responseType: 'code',
     // prompt: 'consent',

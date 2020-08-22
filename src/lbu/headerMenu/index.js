@@ -21,7 +21,7 @@ const LbuMenu = () => {
           disableElevation={true}
           size="large"
           color="inherit"
-          onClick={()=>onClick(handleClick)}
+          onClick={() => onClick(handleClick)}
           className={Mclasses.button}
         >
           Librairie LBU
@@ -39,5 +39,9 @@ const useStyles = makeStyles((theme) => ({
   button: {
     textTransform: "unset",
     color: yellow["A200"],
+    fontWeight: "400",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "small",
+    },
   },
 }));

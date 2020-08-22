@@ -28,6 +28,7 @@ const SignupDialog = (props) => {
     setOpenSignupDialog,
     setOpenSigninDialog,
     handleExternalSubmit,
+    externalSignin,
     signupError,
     signup,
   } = useContext(RootContext).auth;
@@ -82,6 +83,7 @@ const SignupDialog = (props) => {
           signupError={signupError}
           signup={signup}
           handleExternalSubmit={handleExternalSubmit}
+          externalSignin={externalSignin}
         />
       </Dialog>
     </div>

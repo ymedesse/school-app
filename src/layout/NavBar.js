@@ -63,6 +63,7 @@ const HeaderAppBar = () => {
       component="h4"
       onClick={() => history.push("/")}
       color="inherit"
+      className={classes.logo}
     >
       LBU, Zéro Stress
     </Button>
@@ -174,6 +175,11 @@ const useStyles = makeStyles((theme) => {
   return {
     root: {
       display: "flex",
+    },
+    logo: {
+      [theme.breakpoints.down("sm")]: {
+        fontSize: "small",
+      },
     },
     appBar: {
       zIndex: theme.zIndex.drawer + 1,
