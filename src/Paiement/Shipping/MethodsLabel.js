@@ -1,6 +1,7 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
 import CheckBoxSkeleton from "../../components/CheckBoxSkeleton";
+import LineProgressBuffer from "../../components/LineProgressBuffer";
 import { OnChange } from "react-final-form-listeners";
 
 import {
@@ -15,7 +16,7 @@ const MethodsLabel = ({ form, minCost }) => {
   return (
     <>
       <Grid xs={12} item>
-        <React.Suspense fallback={<CheckBoxSkeleton count={1} length={30} />}>
+        <React.Suspense fallback={<CheckBoxSkeleton />}>
           <MethodLabel
             label={LOCAL_SHIPPING_TITLE}
             name="local"
@@ -23,7 +24,7 @@ const MethodsLabel = ({ form, minCost }) => {
           />
         </React.Suspense>
 
-        <React.Suspense fallback={<CheckBoxSkeleton count={1} length={30} />}>
+        <React.Suspense fallback={<LineProgressBuffer />}>
           <MethodLabel
             label={REMOTE_SHIPPING_TITLE}
             name="remote"

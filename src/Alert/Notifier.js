@@ -6,19 +6,19 @@ import AlertTitle from "@material-ui/lab/AlertTitle";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-const Alert = withStyles((theme) => ({
-  message: {
-    [theme.breakpoints.down("sm")]: {
-      padding: "0",
+  const Alert = withStyles((theme) => ({
+    message: {
+      [theme.breakpoints.down("sm")]: {
+        padding: "0",
+      },
     },
-  },
 
-  action: {
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: "0px",
+    action: {
+      [theme.breakpoints.down("sm")]: {
+        paddingLeft: "0px",
+      },
     },
-  },
-}))(({ ...props }) => <MuiAlert elevation={6} variant="filled" {...props} />);
+  }))(({ ...props }) => <MuiAlert elevation={6} variant="filled" {...props} />);
 
 /**
  *
@@ -91,3 +91,5 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+export { Alert };

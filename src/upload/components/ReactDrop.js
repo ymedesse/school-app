@@ -3,6 +3,8 @@ import { useDropzone } from "react-dropzone";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 import UploaderDialog from "../../upload/components/UploaderDialog";
 import { ButtonWithIcon } from "../../components/assets";
+import useMediaDetector from "../../components/hook/useMediaDetector";
+
 const baseStyle = {
   flex: 1,
   display: "flex",
@@ -17,31 +19,37 @@ const baseStyle = {
   color: "#bdbdbd",
   outline: "none",
   transition: "border .24s ease-in-out",
-  textAlign: "center"
+  textAlign: "center",
 };
 
 const activeStyle = {
-  borderColor: "#2196f3"
+  borderColor: "#2196f3",
 };
 
 const acceptStyle = {
-  borderColor: "#00e676"
+  borderColor: "#00e676",
 };
 
 const rejectStyle = {
-  borderColor: "#ff1744"
+  borderColor: "#ff1744",
 };
 
 const DropZone = ({
   handleReject,
   submitSelected,
   handleUpload,
-  isDialogmode = false
+  isDialogmode = false,
+  hideButton = false,
+  dropLabelComponent = (
+    <ButtonWithIcon> Téléverser des fichiers </ButtonWithIcon>
+  ),
 }) => {
+  const mobile = useMediaDetector();
+
   const bookButton = (
     <UploaderDialog
       submitSelected={submitSelected}
-      actionButton={handleClickOpen => (
+      actionButton={(handleClickOpen) => (
         <ButtonWithIcon
           onClick={handleClickOpen}
           variant="contained"
@@ -65,7 +73,7 @@ const DropZone = ({
     getInputProps,
     isDragActive,
     isDragAccept,
-    isDragReject
+    isDragReject,
   } = useDropzone({ accept: "image/*", onDrop });
 
   const style = useMemo(
@@ -73,20 +81,22 @@ const DropZone = ({
       ...baseStyle,
       ...(isDragActive ? activeStyle : {}),
       ...(isDragAccept ? acceptStyle : {}),
-      ...(isDragReject ? rejectStyle : {})
+      ...(isDragReject ? rejectStyle : {}),
     }),
     [isDragAccept, isDragActive, isDragReject]
   );
 
   return (
     <div style={{ width: "100%", position: "relative" }} className="container">
-      {!isDialogmode && (
+      {!isDialogmode && !hideButton && (
         <div style={{ position: "absolute" }}>{bookButton}</div>
       )}
       <div {...getRootProps({ style })}>
-        <ButtonWithIcon> Bibliothèque </ButtonWithIcon>
+        {dropLabelComponent}
         <input {...getInputProps()} />
-        <p>Glisser et déposer des images ici ou cliquer pour en ajouter</p>
+        {!mobile && (
+          <p>Glisser et déposer des images ici ou cliquer pour en ajouter</p>
+        )}
       </div>
     </div>
   );

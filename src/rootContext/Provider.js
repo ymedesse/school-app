@@ -27,6 +27,12 @@ import cartReducer, {
 import cartPerformances from "../cart/containers/performances";
 import * as cartAccesses from "../cart/containers/accesses";
 
+import wishedReducer, {
+  key as wishedKey,
+  init as wishedInit,
+} from "../fournitureWished/containers/reducer";
+import wishedPerformances from "../fournitureWished/containers/performances";
+
 import orderReducer, {
   key as orderKey,
   init as orderInit,
@@ -93,6 +99,7 @@ const RootProvider = (props) => {
     [alertKey]: alertInit,
     [userKey]: userInit,
     [cartKey]: cartInit,
+    [wishedKey]: wishedInit,
     [addressKey]: addressInit,
     [orderKey]: orderInit,
     [checkoutKey]: checkoutInit,
@@ -116,6 +123,7 @@ const RootProvider = (props) => {
     [alertKey]: alertReducer,
     [userKey]: userReducer,
     [cartKey]: cartReducer,
+    [wishedKey]: wishedReducer,
     [addressKey]: addressReducer,
     [orderKey]: orderReducer,
     [checkoutKey]: checkoutReducer,
@@ -156,6 +164,11 @@ const RootProvider = (props) => {
     {
       key: cartKey,
       Performance: cartPerformances,
+      auth,
+    },
+    {
+      key: wishedKey,
+      Performance: wishedPerformances,
       auth,
     },
     {

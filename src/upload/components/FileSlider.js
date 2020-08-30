@@ -12,7 +12,7 @@ const Image = lazy(() => import("./Image"));
  */
 export default function FileSilder({
   images,
-  featuredFile,
+  featuredFile, 
   handleDelete,
   featuredImageField,
   width,

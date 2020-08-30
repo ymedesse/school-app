@@ -15,6 +15,8 @@ export default function Dropzone({
   postHandleAction,
   isDialogmode,
   submitSelected,
+  hideButton,
+  dropLabelComponent
 }) {
   const rootContext = useContext(context);
 
@@ -61,10 +63,12 @@ export default function Dropzone({
 
   return (
     <ReactDrop
+      hideButton={hideButton}
       handleReject={handleReject}
       isDialogmode={isDialogmode}
       handleUpload={handleUpload}
       submitSelected={submitSelected}
+      dropLabelComponent={dropLabelComponent}
     />
   );
 }

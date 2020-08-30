@@ -66,6 +66,13 @@ import classeReducer, {
 import classePerformance from "../classe/containers/performances";
 import * as classeAccesses from "../classe/containers/accesses";
 
+import wishedReducer, {
+  key as wishedKey,
+  init as wishedInit,
+} from "../wished/containers/reducer";
+import wishedPerformance from "../wished/containers/performances";
+import * as wishedAccesses from "../wished/containers/accesses";
+
 import cityReducer, {
   key as cityKey,
   init as cityInit,
@@ -91,6 +98,7 @@ const HomeProvider = (props) => {
     [settingKey]: settingInit,
     [schoolKey]: schoolInit,
     [classeKey]: classeInit,
+    [wishedKey]: wishedInit,
     [cityKey]: cityInit,
     permission: {
       accesses: {
@@ -100,6 +108,7 @@ const HomeProvider = (props) => {
         ...wooCategoryAccesses,
         ...schoolAccesses,
         ...classeAccesses,
+        ...wishedAccesses,
         ...cityAccesses,
       },
     },
@@ -115,6 +124,7 @@ const HomeProvider = (props) => {
     [settingKey]: settingReducer,
     [schoolKey]: schoolReducer,
     [classeKey]: classeReducer,
+    [wishedKey]: wishedReducer,
     [cityKey]: cityReducer,
   });
 
@@ -164,10 +174,14 @@ const HomeProvider = (props) => {
       Performance: schoolPerformance,
       auth: auth.isAuthenticatedUser,
     },
-
     {
       key: classeKey,
       Performance: classePerformance,
+      auth: auth.isAuthenticatedUser,
+    },
+    {
+      key: wishedKey,
+      Performance: wishedPerformance,
       auth: auth.isAuthenticatedUser,
     },
     {

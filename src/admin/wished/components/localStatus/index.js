@@ -1,56 +1,82 @@
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import CustomDialog from "../../../components/Dialog";
-import {ValueText} from "../../../components/LabelValueTypography";
+import CustomDialog from "../../../../components/Dialog";
 import MuiDialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
+import Button from "@material-ui/core/Button";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
-import Button from "@material-ui/core/Button";
+import ListSkeleton from "../../../../components/ListSkeleton";
+const LoacalStatusList = React.lazy(() => import("./List"));
 
-const Confirmation = ({
-  title,
+const LocalStatus = ({
   submit,
+  actionButton,
   externalOpen = false,
   setTExternalOpen,
-  contentText = "Êtes vous sur de vouloir annuler votre commande",
+  title = "Modification du status",
+  values,
+  item,
 }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(externalOpen);
+  const [current, setCurrent] = React.useState(item.status || "");
 
   React.useEffect(() => {
     setOpen(externalOpen);
   }, [externalOpen]);
 
+  React.useEffect(() => {
+    setCurrent((current) => item.status || "");
+  }, [item]);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   const handleClose = () => {
     setOpen(false);
-    setTExternalOpen && setTExternalOpen(false);
+    setTExternalOpen && setTExternalOpen();
+  };
+
+  const onSubmit = () => {
+    submit(current, () => {
+      setTExternalOpen(current);
+      setOpen(false);
+    });
   };
 
   const content = (
     <CustomDialog
       title={title}
-      content={<ValueText>{contentText}</ValueText>}
+      content={
+        <React.Suspense fallback={<ListSkeleton count={3} />}>
+          <LoacalStatusList
+            current={current}
+            status={values}
+            setCurrent={setCurrent}
+          />
+        </React.Suspense>
+      }
+      closeDialog={handleClose}
       actions={
         <>
-          <Button onClick={handleClose} color="primary">
-            Annuler
-          </Button>
-          <Button onClick={submit} color="primary" autoFocus>
-            Confirmer
+          <Button onClick={handleClose}>Annuler</Button>
+          <Button onClick={onSubmit} color="primary">
+            Enrégistrer
           </Button>
         </>
       }
-      closeDialog={handleClose}
     />
   );
 
   return (
     <div>
+      {actionButton && actionButton(handleClickOpen)}
+
       <Dialog
-        maxWidth="sm"
-        fullWidth={true}
+        fullWidth
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         TransitionComponent={Transition}
@@ -73,4 +99,4 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default Confirmation;
+export default LocalStatus;

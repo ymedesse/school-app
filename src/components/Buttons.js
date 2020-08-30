@@ -14,12 +14,13 @@ import ClearIcon from "@material-ui/icons/Clear";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
 import MuiButton from "@material-ui/core/Button";
-import DeleteIcon from "@material-ui/icons/Delete";
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import SaveIcon from "@material-ui/icons/Save";
 import CancelIcon from "@material-ui/icons/Cancel";
 import SettingsIcon from "@material-ui/icons/Settings";
 import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import Button from "@material-ui/core/Button";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
 const IconButtonCust = ({ size = "small", children, ...props }) => (
   <IconButton
@@ -38,6 +39,18 @@ const NextIconButton = ({ size = "small", ...props }) => (
     {...props}
   >
     <ArrowForwardIosIcon
+      style={{ fontSize: size === "small" ? "1rem" : "1.3rem" }}
+    />
+  </IconButton>
+);
+
+const OkIconButton = ({ size = "small", ...props }) => (
+  <IconButton
+    size={size}
+    style={{ padding: size === "small" ? "4px" : "8px" }}
+    {...props}
+  >
+    <CheckCircleIcon
       style={{ fontSize: size === "small" ? "1rem" : "1.3rem" }}
     />
   </IconButton>
@@ -197,7 +210,7 @@ const DeleteIconButton = ({ size = "small", ...props }) => (
     {...props}
     color="secondary"
   >
-    <DeleteIcon style={{ fontSize: size === "small" ? "1rem" : "1.3rem" }} />
+    <RemoveCircleIcon style={{ fontSize: size === "small" ? "1rem" : "1.3rem" }} />
   </IconButton>
 );
 
@@ -330,4 +343,5 @@ export {
   ButtonNext,
   ButtonPreviews,
   PreviousButton,
+  OkIconButton
 };

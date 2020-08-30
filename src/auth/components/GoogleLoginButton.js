@@ -12,8 +12,8 @@ const clientId =
 const GoogleLoginButton = ({ handleExternalSubmit }) => {
   const classes = useStyles();
 
-  const onSuccess = (res) => {
-    handleExternalSubmit(res.profileObj);
+  const onSuccess = async (res) => {
+    await handleExternalSubmit(res.profileObj);
   };
 
   const onFailure = (res) => {};

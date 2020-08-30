@@ -63,6 +63,8 @@ const ListContent = ({
 
   const contents = ({ form, values, ...props }) => {
     // const v = isNew ? {} : { selectedValues: values.classe };
+    console.log({ ss: values.classe });
+
     return (
       <Grid
         container

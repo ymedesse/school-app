@@ -3,7 +3,7 @@ import MultipleSelectorMUI from "../../../../components/MultipleSelectorMUI";
 import { LIST_URL } from "../../containers/constants";
 import useSWR from "swr";
 
-const CategorieSelector = ({
+const ClasseSelectorMui = ({
   fullWidth = true,
   inputProps,
   variant,
@@ -61,4 +61,4 @@ const isEqual = (prev, next) => {
   );
 };
 
-export default React.memo(CategorieSelector, isEqual);
+export default React.memo(ClasseSelectorMui, isEqual);

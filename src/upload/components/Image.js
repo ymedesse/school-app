@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { DeleteIconButton } from "../../components/assets";
+import { DeleteIconButton } from "../../components/Buttons";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
@@ -59,7 +59,7 @@ const Image = ({
       onClick={() => handleClick && handleClick(value.id)}
     >
       <img alt={value.label} src={`${imageUrl}`} className={classes.image} />
-      {subMenu && !isUnique && (
+      {!hideFeaturedCheckLabel && subMenu && !isUnique && (
         <div className={classes.subAction}>
           {featuredImageField ? (
             <StyledRadioMui

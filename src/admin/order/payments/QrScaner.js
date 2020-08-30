@@ -1,8 +1,9 @@
 import React from "react";
+import CropFreeIcon from "@material-ui/icons/CropFree";
 import QrReader from "react-qr-reader";
 import useMediaDetector from "../../../components/hook/useMediaDetector";
 import { SimpleTextField } from "../../../components/TextFields";
-import ScanButton from "../../../Paiement/Billing/ScanButton";
+import ScanButton from "../../../components/SimpleSubmitButton";
 
 const QrScanner = ({ handleNewCode, performFullErrorAlert, checkQrCode }) => {
   const [value, setValue] = React.useState("");
@@ -54,6 +55,7 @@ const QrScanner = ({ handleNewCode, performFullErrorAlert, checkQrCode }) => {
       />
       <ScanButton
         fullWidth={true}
+        icon={<CropFreeIcon />}
         onClick={() => handleScan(value)}
         label="VALIDER"
       />

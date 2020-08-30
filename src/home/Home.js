@@ -10,9 +10,13 @@ import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
 import bannerImag from "../assets/emptyHome.svg";
 import { makeStyles } from "@material-ui/core/styles";
-import { SCHOOL_LIST_LINK, CLASSES_LINK } from "../routerLinks";
+import {
+  SCHOOL_LIST_LINK,
+  CLASSES_LINK,
+  LIST_FOURNITURE_WISH_LINK,
+} from "../routerLinks";
 import { LabelText, ValueText } from "../components/LabelValueTypography";
-import { BigTypography /* ,SubLargeTypography */ } from "../components/Typography";
+import { BigTypography, SubLargeTypography } from "../components/Typography";
 import HomePub from "../lbu/HomePub";
 
 import useMediaDetector from "../components/hook/useMediaDetector";
@@ -33,6 +37,11 @@ const Home = () => {
   const handleClickAllSchool = (e) => {
     e.preventDefault();
     history.push(SCHOOL_LIST_LINK);
+  };
+
+  const handleClickAddSchool = (e) => {
+    e.preventDefault();
+    history.push(LIST_FOURNITURE_WISH_LINK);
   };
 
   const handleClickSchool = () => {
@@ -92,17 +101,6 @@ const Home = () => {
           <div className={classes.text}>
             <div styme={classes.margin} />
 
-            <ValueText className={classes.seconButton} color="secondary">
-              <Link
-                color="secondary"
-                underline="none"
-                href={SCHOOL_LIST_LINK}
-                onClick={handleClickAllSchool}
-              >
-                Consultez la liste des écoles
-              </Link>
-            </ValueText>
-            {/*             
             {isMobile ? (
               <LabelText>Vous ne trouvez pas votre école ?</LabelText>
             ) : (
@@ -126,13 +124,13 @@ const Home = () => {
             <ValueText className={classes.seconButton} color="secondary">
               <Link
                 color="primary"
-                href="#"
                 underline="none"
-                onClick={() => {}}
+                href={LIST_FOURNITURE_WISH_LINK}
+                onClick={handleClickAddSchool}
               >
                 Ajouter votre école
               </Link>
-            </ValueText> */}
+            </ValueText>
           </div>
         </div>
       </Grid>

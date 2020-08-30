@@ -11,6 +11,7 @@ const IconButtonMedia = ({
   textButtonProps = {},
   iconButtonProps = {},
   onClick = () => {},
+  color,
   ...props
 }) => {
   const theme = useTheme();
@@ -32,6 +33,7 @@ const IconButtonMedia = ({
       size={size === "large" ? "medium" : size}
       style={{ padding: size === "small" ? "4px" : "8px" }}
       onClick={onClick}
+      color={color}
       {...iconButtonProps}
     >
       {icon}
@@ -41,6 +43,7 @@ const IconButtonMedia = ({
       onClick={onClick}
       variant="text"
       size={size}
+      color={color}
       {...iconposition}
       {...props}
     >

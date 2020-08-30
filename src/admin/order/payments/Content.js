@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { getStatusColor } from "../container/utils";
 import Alert from "@material-ui/lab/Alert";
 import SubmitButton from "../../../Paiement/Billing/SubmitButton";
-import ScanButton from "../../../Paiement/Billing/ScanButton";
+import ScanButton from "../../../components/SimpleSubmitButton";
 
 import {
   TitleTypography,

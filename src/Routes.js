@@ -26,6 +26,7 @@ import Shipping from "./Paiement/Shipping";
 import InstallmentsPayment from "./order/InstallmentsPayment/billing";
 import Cart from "./cart";
 import Dashboard from "./DashBoard";
+import FournitureWished from "./fournitureWished";
 
 import AuthRoute from "./auth/utils/AuthRoute";
 
@@ -55,7 +56,6 @@ let theme = createMuiTheme({
     ].join(","),
   },
 });
-
 
 theme = responsiveFontSizes(theme);
 
@@ -191,6 +191,12 @@ const Routes = () => {
                         />
 
                         <AuthRoute
+                          path={adminRouteLink.LIST_FOURNITURE_WISH_LINK}
+                          exact
+                          component={FournitureWished}
+                        />
+
+                        <AuthRoute
                           path={
                             adminRouteLink.INSTALLMENT_PAYMENT_WITH_PARAMS_LINK
                           }
@@ -228,6 +234,12 @@ const Routes = () => {
 
                         <AdminRoute
                           path={adminRouteLink.ADMIN_ORDER_LINK}
+                          exact
+                          component={AdminDashboard}
+                        />
+
+                        <Route
+                          path={adminRouteLink.ADMIN_ORDER_WISH_LINK}
                           exact
                           component={AdminDashboard}
                         />

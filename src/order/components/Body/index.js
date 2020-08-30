@@ -4,7 +4,7 @@ import { INSTALLMENT_PAYMENT_LINK } from "../../../routerLinks";
 
 import BoundarySuspense from "../../../components/ErrorBoundarySuspense";
 import compareProps from "../../../utils/compareProps";
-import ConfirmationCancel from "./ConfirmationDialog";
+import ConfirmationCancel from "../../../components/ConfirmationDialog";
 // import { CREATE_ACTION, UPDATE_ACTION } from "../../container/accesses";
 
 const Form = React.lazy(() => import("./Form"));

@@ -1,6 +1,6 @@
 import React, { Component } from "./node_modules/react";
 import { DropzoneDialog } from "./node_modules/material-ui-dropzone";
-import Button from "./node_modules/@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 
 export default class DropzoneDialogExample extends Component {
   constructor(props) {

@@ -6,8 +6,13 @@ import * as productAccess from "../Product/container/accesses";
 import OrderDashboard from "../order";
 import * as orderAccess from "../order/container/accesses";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import QrCodePayment from "../order/payments";
+
+import WishedDashboard from "../wished";
+import * as wishedAccess from "../wished/containers/accesses";
+import SubjectIcon from "@material-ui/icons/Subject";
 
 import Manager from "../manager";
 import Action from "../manager/Action";
@@ -89,6 +94,18 @@ export const generalItems = [
     itemIcon: <SchoolIcon />,
     content: (props) => <School {...props} />,
     isAllowed: (user) => checkPermission(user, schoolAccess.SCHOOL),
+    child: [
+      {
+        id: "wishedList",
+        title: "Demandes d'ajout de liste",
+        path: routeLink.ADMIN_ORDER_WISH_LINK,
+        itemIcon: <SubjectIcon />,
+        content: (props) => <WishedDashboard {...props} />,
+        action: <></>,
+        access: wishedAccess.ACCESS_MENU,
+        isAllowed: (user) => checkPermission(user, wishedAccess.ACCESS_MENU),
+      },
+    ],
   },
   {
     id: "classe",

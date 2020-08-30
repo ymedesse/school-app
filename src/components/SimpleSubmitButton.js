@@ -1,10 +1,27 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import CropFreeIcon from "@material-ui/icons/CropFree";
 import { makeStyles } from "@material-ui/core/styles";
 
-const ScanButton = ({ label, fullWidth = false, ...props }) => {
+const ScanButton = ({
+  children,
+  label,
+  icon,
+  end = false,
+  fullWidth = false,
+  type = "submit",
+  ...props
+}) => {
   const classes = useStyles();
+
+  const iconProps = !icon
+    ? {}
+    : end
+    ? {
+        endIcon: icon,
+      }
+    : {
+        startIcon: icon,
+      };
 
   return (
     <>
@@ -12,13 +29,13 @@ const ScanButton = ({ label, fullWidth = false, ...props }) => {
         color="primary"
         variant="contained"
         size="large"
-        type="submit"
+        type={type}
         fullWidth={fullWidth}
         className={classes.buttonValidation}
-        startIcon={<CropFreeIcon />}
+        {...iconProps}
         {...props}
       >
-        {label}
+        {label || children}
       </Button>
     </>
   );

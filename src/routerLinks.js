@@ -69,6 +69,8 @@ export const CLASSES_LINK = "/classes";
 export const ADMIN_CITIES_LIST_LINK = "/villes";
 
 export const LIST_FOURNITURE_LINK = "/fournitures";
+export const LIST_FOURNITURE_WISH_LINK = "/ajouter-listes-fournitures";
+export const ADMIN_ORDER_WISH_LINK = "/admin/demande-ajout-liste";
 export const LIST_FOURNITURE_PRODUCT_LINK = "/fournitures/:school/:classe";
 
 export const DASHBOARD_LINK = "/dashboard";

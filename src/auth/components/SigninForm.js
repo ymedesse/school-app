@@ -23,6 +23,8 @@ import GoogleLoginButton from "./GoogleLoginButton";
 
 const SigninForm = ({
   openInDialog,
+  closeDialog,
+  nextStep,
   signin,
   signinError,
   externalSignin,
@@ -68,8 +70,8 @@ const SigninForm = ({
       const { error } = data;
       error && setValues({ ...values, error: error, loading: false });
       if (!error) {
-        openInDialog && props.closeDialog();
-        props.nextStep && props.nextStep();
+        openInDialog && closeDialog();
+        nextStep && nextStep();
       }
     });
   };
@@ -81,8 +83,8 @@ const SigninForm = ({
       const { error } = data;
       error && setValues({ ...values, error: error, loading: false });
       if (!error) {
-        openInDialog && props.closeDialog();
-        props.nextStep && props.nextStep();
+        openInDialog && closeDialog();
+        props.nextStep && nextStep();
       }
     });
   };
