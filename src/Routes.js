@@ -197,7 +197,7 @@ const Routes = () => {
                         />
 
                         <AuthRoute
-                          path={
+                          path={        
                             adminRouteLink.INSTALLMENT_PAYMENT_WITH_PARAMS_LINK
                           }
                           exact

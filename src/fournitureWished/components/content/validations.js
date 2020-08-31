@@ -1,8 +1,8 @@
 import { FULL_FORM } from "./constants";
-export default (action) => (values) => {
+export default (formType) => (values) => {
   const errors = {};
 
-  if (action === FULL_FORM) {
+  if (formType === FULL_FORM) {
     if (!values.phone) {
       errors.phone = "Important";
     }

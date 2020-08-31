@@ -8,6 +8,10 @@ import compareProps from "../../utils/compareProps";
 import { AddFabButton } from "../../components/Buttons";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import ContentDialog from "./content/BodyDialog";
+import {
+  UPDATE_LIST_ACTION,
+  CREATE_List_ACTION,
+} from "../containers/constants";
 
 const Info = lazy(() => import("./info"));
 const Row = lazy(() => import("./Row"));
@@ -30,10 +34,11 @@ const OrderList = ({
     current: "",
     editDialogOpener: false,
     deleteDialogOpener: false,
+    action: "",
   });
 
   const { listes, ...infoData } = data;
-  const { current, editDialogOpener, deleteDialogOpener } = state;
+  const { current, editDialogOpener, deleteDialogOpener, action } = state;
 
   /* action */
 
@@ -46,6 +51,7 @@ const OrderList = ({
         ...state,
         current: item,
         editDialogOpener: true,
+        action: UPDATE_LIST_ACTION,
       }));
   };
 
@@ -85,6 +91,7 @@ const OrderList = ({
       ...state,
       current: undefined,
       editDialogOpener: true,
+      action: CREATE_List_ACTION,
     }));
   };
 
@@ -110,6 +117,7 @@ const OrderList = ({
       handleSubmitListe={handleSubmitListe}
       performFullErrorAlert={performFullErrorAlert}
       performFullSuccessAlert={performFullSuccessAlert}
+      action={action}
     />
   );
 
@@ -142,7 +150,9 @@ const OrderList = ({
       <Divider />
 
       {(listes || []).length > 0 ? (
-        <List className={classes.contents}>{listes.map(rowRenderer)}</List>
+        <List className={classes.contents}>
+          {listes.filter((item) => item.status === "pending").map(rowRenderer)}
+        </List>
       ) : (
         <LabelText style={{ padding: "8px" }}>
           Vous n'avez aucune liste suggérée

@@ -10,8 +10,9 @@ import SwrRender from "../components/SwrRender";
 import compareProps from "../utils/compareProps";
 import Form from "./components/content";
 import List from "./components/List";
-import TransitionAlerts from "../Alert/TransitionAlert";
+import { INITIALISATION_List_ACTION } from "./containers/constants";
 
+import TransitionAlerts from "../Alert/TransitionAlert";
 import useMediaDetector from "../components/hook/useMediaDetector";
 import { TitleTypography } from "../components/Typography";
 import { ValueText } from "../components/LabelValueTypography";
@@ -70,6 +71,7 @@ const HomeWished = ({
       </TitleTypography>
       <Template>
         <Form
+          action={INITIALISATION_List_ACTION}
           data={getValidData()}
           refresh={refresh}
           handleSubmitListe={handleSubmitListe}

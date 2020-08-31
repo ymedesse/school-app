@@ -14,12 +14,11 @@ import { FULL_FORM } from "./constants";
 
 const ListeImages = React.lazy(() => import("./images"));
 
-const Form = ({ action, values, classes = {} }) => {
+const Form = ({ formType, values, classes = {} }) => {
   const isNew = values.liste._id === undefined;
-
   return (
     <>
-      {action === FULL_FORM && (
+      {formType === FULL_FORM && (
         <Paper
           square
           variant="outlined"
@@ -99,4 +98,4 @@ const Form = ({ action, values, classes = {} }) => {
   );
 };
 
-export default React.memo(Form);
+export default Form;

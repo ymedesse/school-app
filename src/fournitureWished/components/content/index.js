@@ -5,6 +5,7 @@ import validate from "./validations";
 import Form from "./Form";
 // import { Debug } from "mui-rff";
 import { FULL_FORM, LISTE_FORM } from "./constants";
+import { INITIALISATION_List_ACTION } from "../../containers/constants";
 
 const WishedContent = ({
   data,
@@ -13,12 +14,14 @@ const WishedContent = ({
   performFullSuccessAlert,
   handleCloseDialog,
   refresh,
+  action,
 }) => {
-  const action = !data ? FULL_FORM : LISTE_FORM;
+  const formType =
+    action === INITIALISATION_List_ACTION ? FULL_FORM : LISTE_FORM;
 
   const getValue = (values) => {
     const { liste } = values;
-    return action === FULL_FORM ? values : { liste };
+    return formType === FULL_FORM ? values : { liste };
   };
 
   const onSubmit = async (values, form, complete) => {
@@ -44,7 +47,7 @@ const WishedContent = ({
 
   const contents = ({ form, values, ...props }) => (
     <>
-      <Form action={!data ? FULL_FORM : LISTE_FORM} values={values} />
+      <Form formType={formType} values={values} />
       {/* <Debug /> */}
     </>
   );
@@ -55,7 +58,7 @@ const WishedContent = ({
       initialValues={getDefaultData(data)}
       subscription={{ pristine: true, submitting: true, values: true }}
       contents={contents}
-      validate={validate(action)}
+      validate={validate(formType)}
     />
   );
 };
