@@ -19,7 +19,7 @@ const Wisheds = ({
   selected = [],
   multiSelector,
   name = "wished",
-  affichageName = "Liste souhaitées",
+  affichageName = "Listes demandées",
   ...props
 }) => {
   const adminContext = React.useContext(context);

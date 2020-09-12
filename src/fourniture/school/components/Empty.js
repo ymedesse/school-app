@@ -1,14 +1,21 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import AddIcon from "@material-ui/icons/Add";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { makeStyles } from "@material-ui/core/styles";
-
 import AddSvg from "../../../assets/addList.svg";
 import { ButtonWithIcon } from "../../../components/Buttons";
 import { LabelText } from "../../../components/LabelValueTypography";
-
+import { LIST_FOURNITURE_WISH_LINK } from "../../../routerLinks";
 const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = () => {
+    var win = window.open("https://www.librairielbu.com/");
+    win.focus();
+  };
 
   return (
     <Grid
@@ -32,11 +39,21 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
         <ButtonWithIcon
           variant="contained"
           color="primary"
-          onClick={() => {}}
+          onClick={() => history.push(LIST_FOURNITURE_WISH_LINK)}
           startIcon={<AddIcon />}
           className={classes.button}
         >
           Ajouter une école
+        </ButtonWithIcon>
+
+        <ButtonWithIcon
+          variant="text"
+          color="primary"
+          onClick={handleClick}
+          endIcon={<NavigateNextIcon />}
+          className={classes.button}
+        >
+          Visiter  librairielbu.com 
         </ButtonWithIcon>
       </div>
     </Grid>

@@ -11,8 +11,9 @@ import { FieldArray } from "react-final-form-arrays";
 import ProductImagesSlider from "./Slider";
 import Dropzone from "../../../../upload/components/Dropzone";
 import { LinkButton } from "../../../../components/LinkButton";
-import { ValueText } from "../../../../components/LabelValueTypography";
 import ImageViewer from "../../../../components/ImageViewer/";
+import { ValueText } from "../../../../components/LabelValueTypography";
+import ListSkeleton from "../../../../components/ListSkeleton";
 
 const ListeImage = ({ classes, ligthForm = false }) => {
   const [loading, setLoading] = useState(false);
@@ -65,21 +66,25 @@ const ListeImage = ({ classes, ligthForm = false }) => {
                     spacing={1}
                   >
                     <Grid item xs={12}>
-                      <Dropzone
-                        // isDialogmode
-                        dropLabelComponent={
-                          <Button
-                            color="primary"
-                            startIcon={<CloudUploadIcon />}
-                          >
-                            {" "}
-                            Téléverser ma liste
-                          </Button>
-                        }
-                        hideButton={true}
-                        postHandleAction={getNewFiles(fields)}
-                        submitSelected={getNewFiles(fields)}
-                      />
+                      {loading ? (
+                        <ListSkeleton count={1} height={80} />
+                      ) : (
+                        <Dropzone
+                          // isDialogmode
+                          dropLabelComponent={
+                            <Button
+                              color="primary"
+                              startIcon={<CloudUploadIcon />}
+                            >
+                              {" "}
+                              Téléverser ma liste
+                            </Button>
+                          }
+                          hideButton={true}
+                          postHandleAction={getNewFiles(fields)}
+                          submitSelected={getNewFiles(fields)}
+                        />
+                      )}
                     </Grid>
                     <Grid item xs={12}>
                       <div style={{ textAlign: "right" }}>

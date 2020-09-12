@@ -46,7 +46,7 @@ const HomeWished = ({
     getListCount() > 0 ? (
       <>
         <TitleTypography style={{ marginLeft: "8px" }}>
-          Vos listes de fournitures souhaitées
+          Vos demandes d'ajouts de listes de fournitures
         </TitleTypography>
         <Template isList={true} newListe={newListe}>
           <List
@@ -67,7 +67,7 @@ const HomeWished = ({
   const notFoundCompenent = () => (
     <>
       <TitleTypography style={{ marginLeft: "8px" }}>
-        Ajouter votre lise de fourniture
+        Ajouter votre liste de fournitures
       </TitleTypography>
       <Template>
         <Form

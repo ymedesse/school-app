@@ -3,6 +3,7 @@ import Skeleton from "@material-ui/lab/Skeleton";
 const ListSkeleton = ({
   count = 3,
   height = 24,
+  animation = "wave",
   margin = "16px",
   width = "100%",
 }) => {
@@ -14,7 +15,7 @@ const ListSkeleton = ({
           variant="rect"
           width={width}
           height={height}
-          animation="wave"
+          animation={animation}
           style={{ marginBottom: margin }}
         />
       );

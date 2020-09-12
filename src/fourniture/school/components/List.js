@@ -52,41 +52,38 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
 
   return (
     <SwrRender data={data}>
-      {() =>
-        getCount() > 0 ? (
-          <Paper square className={classes.paper}>
-            <WindowScroller
-              style={{
-                ":focus": {
-                  border: "10px solid",
-                },
-              }}
-            >
-              {({ height, isScrolling, registerChild, scrollTop }) => (
-                <AutoSizer disableHeight={true}>
-                  {({ width }) => (
-                    <div ref={registerChild}>
-                      <List
-                        autoHeight
-                        isScrolling={isScrolling}
-                        scrollTop={scrollTop}
-                        ref={listRef}
-                        height={height}
-                        rowCount={getCount()}
-                        width={width}
-                        rowHeight={75}
-                        rowRenderer={rowRenderer}
-                      />
-                    </div>
-                  )}
-                </AutoSizer>
-              )}
-            </WindowScroller>
-          </Paper>
-        ) : (
+      {() => (
+        <Paper square className={classes.paper}>
+          <WindowScroller
+            style={{
+              ":focus": {
+                border: "10px solid",
+              },
+            }}
+          >
+            {({ height, isScrolling, registerChild, scrollTop }) => (
+              <AutoSizer disableHeight={true}>
+                {({ width }) => (
+                  <div ref={registerChild}>
+                    <List
+                      autoHeight
+                      isScrolling={isScrolling}
+                      scrollTop={scrollTop}
+                      ref={listRef}
+                      height={height}
+                      rowCount={getCount()}
+                      width={width}
+                      rowHeight={75}
+                      rowRenderer={rowRenderer}
+                    />
+                  </div>
+                )}
+              </AutoSizer>
+            )}
+          </WindowScroller>
           <Empty />
-        )
-      }
+        </Paper>
+      )}
     </SwrRender>
   );
 };
