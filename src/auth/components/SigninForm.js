@@ -84,7 +84,7 @@ const SigninForm = ({
       error && setValues({ ...values, error: error, loading: false });
       if (!error) {
         openInDialog && closeDialog();
-        props.nextStep && nextStep();
+        nextStep && nextStep();
       }
     });
   };

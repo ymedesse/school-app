@@ -31,7 +31,7 @@ const SchoolList = ({ url, setCurrentSearch, schoolId, ...restProps }) => {
         <div className={classes.margin} />
         <LabelText className={classes.title}>
           Si vous ne trouvez pas votre école, ajoutez la et nous nous occupons
-          de tous.
+          de tout!
         </LabelText>
 
         <div className={classes.margin} />

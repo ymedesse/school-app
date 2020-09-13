@@ -25,8 +25,8 @@ const Form = ({ formType, values, classes = {} }) => {
           style={{ padding: "8px", marginBottom: "16px" }}
         >
           <SimpleTextField
-            placeholder="Vos contacts  numéro 1 , numéro 2 , ..."
-            label="Votre contact"
+            placeholder="contact 1 , contact 2 , ..."
+            label="Contact"
             helperText="Numéros de téléphones par les quelles nous pouvons vous joindre"
             required={true}
             fullWidth

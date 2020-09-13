@@ -18,23 +18,23 @@ const Signin = () => {
   const classes = useStyles();
   let location = useLocation();
   let history = useHistory();
+  const [nextUrl, setNextUrl] = React.useState();
+  React.useEffect(() => {
+    const url = location.state ? location.state.from.pathname : undefined;
+    setNextUrl(url);
+  }, [location.state]);
+
 
   const { signin, signinError, isAuthenticated, externalSignin } = useContext(
     context
   ).auth;
 
   const nextStep = (async) => {
-    location.state !== undefined
-      ? history.push(location.state.from.pathname)
-      : history.push("/");
+    history.push(nextUrl);
   };
 
   const forwardToSignup = () => {
-    let pathFrom = "/";
-    if (location.state !== undefined) {
-      pathFrom = location.state.from.pathname;
-    }
-
+    let pathFrom = nextUrl || "/";
     history.push("/signup", { from: { "pathname": pathFrom } });
   };
 

@@ -14,10 +14,6 @@ const Wished = ({
 }) => {
   return (
     <Paper>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-      distinctio maxime nam, amet odit labore, possimus quos quaerat cum ullam,
-      hic eaque facilis quisquam? Repellendus velit modi magnam quisquam
-      aperiam.
       <React.Suspense fallback={<LinearProgress />}>
         <Wisheds
           setCurrentViewTitle={setCurrentViewTitle}
